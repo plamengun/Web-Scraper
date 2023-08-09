@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-def rss_feed_extractor(page, browser):
+def rss_feed_extractor(page):
     n = 0
     while n < 5:
         rss_feed_dropdown = page.locator(f"//div[@id='rss-atom-links']")
@@ -21,6 +21,7 @@ def rss_feed_extractor(page, browser):
         next_button.click()
         n += 1
 
+#ToDo Look into how to implement it in Headless mode
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False, slow_mo=50)
@@ -36,6 +37,6 @@ with sync_playwright() as p:
     anchor.click()
     page.wait_for_event("load")
     
-    rss_feed_extractor(page, browser)
+    rss_feed_extractor(page)
 
     page.close()
