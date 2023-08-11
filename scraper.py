@@ -1,19 +1,29 @@
 from bs4 import BeautifulSoup
 import requests
 from browser_controller import pw_login
-from common.storage import job_dict
+import json
 
 
-resp_url = requests.get(f"https://www.upwork.com/ab/feed/jobs/rss?q=python&contractor_tier=2%2C3&proposals=0-4&sort=recency&paging=0%3B10&api_params=1&securityToken=f2de7592ae0640de30c3908545fdc8d53c89e8d1aabe736eac8074a2c18280dd2cee848455935a36dafa06163c4407dfe3b8936cb2699be7023843af15b0995b&userUid=703923235574398976&orgUid=703923235633119233")
+def extract_job_posts(pages: list):
+    job_dict = {}
+    for page in pages:
 
-soup = BeautifulSoup(resp_url.content, 'xml')
-entries = soup.find_all('item')
+        resp_url = requests.get(f"{page}")
 
-for entry in entries:
-    title = entry.title.text
-    url = entry.link.text
-    print(f"Job post: {title}\nLink: {url}\n\n")
+        soup = BeautifulSoup(resp_url.content, 'xml')
+        job_posts = soup.find_all('item')
+
+        for job_post in job_posts:
+            title = job_post.title.text
+            url = job_post.link.text
+            job_dict[title] = [url]
+    
+    return job_dict
 
 
+with open('common/storage.py', 'w') as file:
+    json_job_dict = json.dumps(extract_job_posts(pw_login()), sort_keys=False, indent=4)
+    file.write(json_job_dict)
+    file.close()
 
 
