@@ -21,9 +21,13 @@ def extract_job_posts(pages: list):
     return job_dict
 
 
-with open('common/storage.py', 'w') as file:
-    json_job_dict = json.dumps(extract_job_posts(pw_login()), sort_keys=False, indent=4)
-    file.write(json_job_dict)
-    file.close()
+def write_in_storage(job_posts):
+    with open('common/storage.py', 'w') as file:
+        json_job_dict = json.dumps(extract_job_posts(pw_login()), sort_keys=False, indent=4)
+        file.write(json_job_dict)
+        file.close()
 
 
+def read_from_storage():
+    with open('common/storage.py', 'r') as file:
+        pass
