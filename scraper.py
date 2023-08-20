@@ -4,30 +4,33 @@ from browser_controller import pw_login
 import json
 
 
-def extract_job_posts(pages: list):
+PATH = 'common/storage.py'
+
+with open(PATH, 'r') as file:
+    open_storage = json.load(file)
+
+
+def extract_job_posts(pages: list[str]):
     job_dict = {}
+    
     for page in pages:
 
         resp_url = requests.get(f"{page}")
-
         soup = BeautifulSoup(resp_url.content, 'xml')
         job_posts = soup.find_all('item')
 
         for job_post in job_posts:
-            title = job_post.title.text
-            url = job_post.link.text
-            job_dict[title] = [url]
+            if job_post.title.text not in open_storage:
+                title = job_post.title.text
+                url = job_post.link.text
+                job_dict[title] = [url]
+
+    with open(PATH, 'a') as file:
+        file.write(json.dumps(job_dict, sort_keys=False, indent=4))
     
     return job_dict
 
 
-def write_in_storage(job_posts):
-    with open('common/storage.py', 'w') as file:
-        json_job_dict = json.dumps(extract_job_posts(pw_login()), sort_keys=False, indent=4)
-        file.write(json_job_dict)
-        file.close()
-
-
-def read_from_storage():
-    with open('common/storage.py', 'r') as file:
-        pass
+if __name__ == "__main__":
+    pages_to_extract = pw_login()
+    print(extract_job_posts(pages_to_extract))
