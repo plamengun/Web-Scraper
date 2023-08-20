@@ -6,13 +6,24 @@ import json
 
 PATH = 'common/storage.py'
 
-with open(PATH, 'r') as file:
-    open_storage = json.load(file)
+
+def load_storage():
+    try:
+        with open(PATH, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}
 
 
+def save_storage(storage_data):
+    with open(PATH, 'w') as file:
+        json.dump(storage_data, file, sort_keys=False, indent=4)
+
+    
 def extract_job_posts(pages: list[str]):
     job_dict = {}
-    
+    open_storage = load_storage()
+
     for page in pages:
 
         resp_url = requests.get(f"{page}")
@@ -25,8 +36,8 @@ def extract_job_posts(pages: list[str]):
                 url = job_post.link.text
                 job_dict[title] = [url]
 
-    with open(PATH, 'a') as file:
-        file.write(json.dumps(job_dict, sort_keys=False, indent=4))
+    open_storage.update(job_dict)
+    save_storage(open_storage)
     
     return job_dict
 

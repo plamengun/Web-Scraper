@@ -148,20 +148,15 @@
     ],
     "Please support VertexAI learning - Upwork": [
         "https://www.upwork.com/jobs/Please-support-VertexAI-learning_%7E01c337f1a62cf10e21?source=rss"
-    ]
-}
-{
-    "Crypto Investment Website Developer - Upwork": [
-        "https://www.upwork.com/jobs/Crypto-Investment-Website-Developer_%7E0122e5d4bd939fe156?source=rss"
     ],
-    "Seeking Long-Term AI Engineer Strategic Partner for Innovative Musicology Project - Upwork": [
-        "https://www.upwork.com/jobs/Seeking-Long-Term-Engineer-Strategic-Partner-for-Innovative-Musicology-Project_%7E01ae3509cb1654aada?source=rss"
+    "Azur custom ML python code with Auto scaling - Upwork": [
+        "https://www.upwork.com/jobs/Azur-custom-python-code-with-Auto-scaling_%7E01534231a5f6147383?source=rss"
     ],
-    "Docker Image Creation and Pushing to DockerHub - Upwork": [
-        "https://www.upwork.com/jobs/Docker-Image-Creation-and-Pushing-DockerHub_%7E012c7e415f8a5e8b67?source=rss"
+    "Engineer - Upwork": [
+        "https://www.upwork.com/jobs/Engineer_%7E01549c9be14d848c61?source=rss"
     ],
-    "Web Application using Chagpt and OpenAI in Python - Upwork": [
-        "https://www.upwork.com/jobs/Web-Application-using-Chagpt-and-OpenAI-Python_%7E01b41b68bb74ead4eb?source=rss"
+    "OpenGL Table Tennis game (ping pong) using Python, MP line, MP circle, 2 types of transformation. - Upwork": [
+        "https://www.upwork.com/jobs/OpenGL-Table-Tennis-game-ping-pong-using-Python-line-circle-types-transformation_%7E01a9f149635d62d361?source=rss"
     ],
     "Optimize celery tasks to avoid sigkill ( out of memory) - Upwork": [
         "https://www.upwork.com/jobs/Optimize-celery-tasks-avoid-sigkill-out-memory_%7E01ad354d6299ed1cdb?source=rss"
