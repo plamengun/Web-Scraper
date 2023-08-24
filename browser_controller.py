@@ -15,7 +15,7 @@ def pw_new_page(context, button):
 def pw_rss_feed_extractor(page, context):
     n = 0
     rss_feeds = []
-    while n < 5:
+    while n < 1:
         rss_feed_dropdown = page.locator(f"//div[@id='rss-atom-links']")
         rss_feed_dropdown.click()
         rss_feed_button = page.locator(f"//div[@id='rss-atom-links']//span[@role='button' and normalize-space()='RSS']/span")

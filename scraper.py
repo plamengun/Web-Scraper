@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from browser_controller import pw_login
 import json
+import re
 
 
 PATH = 'common/storage.py'
@@ -20,6 +21,15 @@ def save_storage(storage_data):
         json.dump(storage_data, file, sort_keys=False, indent=4)
 
     
+def match_re_pattern(pattern, string: str) -> str:
+    match_pattern = re.search(pattern, string, re.DOTALL | re.IGNORECASE)
+    if match_pattern:
+        final = match_pattern.group(1).strip()
+    else:
+        final = 'None'
+    return final
+
+
 def extract_job_posts(pages: list[str]):
     job_dict = {}
     open_storage = load_storage()
@@ -32,9 +42,16 @@ def extract_job_posts(pages: list[str]):
 
         for job_post in job_posts:
             if job_post.title.text not in open_storage:
+                xml_to_str = job_post.description.text
+                posted_on_pattern = r'<b>Posted On<\/b>: (.*?)<br \/>'
+                description_pattern = r'^(.*?)(?=<b>Posted)'
+
                 title = job_post.title.text
                 url = job_post.link.text
-                job_dict[title] = [url]
+                posted_on = match_re_pattern(posted_on_pattern, xml_to_str)
+                description = match_re_pattern(description_pattern, xml_to_str)
+
+                job_dict[title] = [url, description, posted_on]
 
     open_storage.update(job_dict)
     save_storage(open_storage)
