@@ -33,6 +33,12 @@ def pw_rss_feed_extractor(page, context):
     return rss_feeds
 
 
+def pw_job_posting(page, context):
+    job_page = context.new_page()
+    job_page.goto(page)
+    
+
+
 def pw_login():
     # This is the driver function.
 
