@@ -310,5 +310,55 @@
         "https://www.upwork.com/jobs/Help-improve-and-extend-tree-boosting-algorithm-Julia_%7E01e3bc26b19ad98953?source=rss",
         "Hello developers.<br />\nI am a university professor, in the process of developing SMARTboost, which I hope may be a complement to XGBoost, lightGBM etc...<br /><br />\nA proof of concept can be found here https://github.com/PaoloGiordani/SMARTboost.jl<br /><br />\nI am currently working on a much more general version, with very promising results for classification and quantile regression.<br /><br />\nWill discuss more details in chat.<br />\nThanks.<br /><br /><b>Budget</b>: $300\n<br />",
         "August 24, 2023 12:56 UTC"
+    ],
+    "ReacJS Crud example on Postgres Database - Upwork": [
+        "https://www.upwork.com/jobs/ReacJS-Crud-example-Postgres-Database_%7E015e46e15ab0b90cf0?source=rss",
+        "I need coaching to create a simple ReactJS CRUD project with a Postgres DB.<br /><br />\nI have the and on the Postgres Server and we will create the schema align to the project.<br /><br /><b>Hourly Range</b>: $33.00-$70.00\n\n<br />",
+        "August 30, 2023 17:10 UTC"
+    ],
+    "Scratch Tutorials / channel  - Upwork": [
+        "https://www.upwork.com/jobs/Scratch-Tutorials-channel_%7E0121a05e5ff871faff?source=rss",
+        "Hi. I am looking to create Scratch coding tutorials / channel using my animated characters as the mascots (spites)., like the example below. Is this something you can do?. I can&nbsp;&nbsp;help draft some scenarios / game ideas&nbsp;&nbsp;but to start it&nbsp;&nbsp;could be intro to scratch&nbsp;&nbsp;&nbsp;&nbsp;i will provide the&nbsp;&nbsp;illustrations<br /><br />\nexamples<br />\nhttps://www.youtube.com/watch?v=D16hTnDGweo<br /><br />\nhttps://www.youtube.com/channel/UCxl_IeUBfIRmqiKacVmpEaA<br /><br /><br />",
+        "August 30, 2023 17:05 UTC"
+    ],
+    "Extracting tactics, techniques, and procedures (TTPs) through machine learning. - Upwork": [
+        "https://www.upwork.com/jobs/Extracting-tactics-techniques-and-procedures-TTPs-through-machine-learning_%7E01c2fc03eb204c9bab?source=rss",
+        "Security personnel are exchanging information about security events in unstructured<br />\nsituations using open-source cyber threat intelligence publishing platforms. These platforms<br />\nare for publicising newly discovered security-related reports. The novel discoveries may be<br />\ntranslated into machine-readable CTI (Cyber Threat Intelligence) data for automated analysis<br />\nand rapid deployment in a variety of defensive systems.<br />\nHowever, manually gathering CTI is inefficient, making it impossible for security professionals<br />\nto respond to regularly occurring cybersecurity situations on time. The biggest drawback of<br />\nsuch a study was the lack of a large publicly available and usable threat intelligence reports<br />\ndataset. As a result, there is a need for developing approaches for the automatic generation of<br />\nthreat intelligence reports via the fusion of information readily available on the web through<br />\nblogs, news, and open-source threat intelligence publication platforms (OSTIPs). The goal of<br />\nthis project is to develop and evaluate an automatic approach for generating cyber threat<br />\nintelligence reports by combining information from different OSTIPs.<br /><br /><b>Budget</b>: $60\n<br />",
+        "August 30, 2023 17:00 UTC"
+    ],
+    "Partner Oversight - Upwork": [
+        "https://www.upwork.com/jobs/Partner-Oversight_%7E0191bd42b23a2c70c0?source=rss",
+        "We are seeking an experienced professional to help us in conducting oversight on our partners and ensuring their compliance with our standards and requirements. The ideal candidate will have strong communication skills, attention to details, and experience in partner management. The role will include regularly checking on the partners&#039; activities and documentation, providing feedback and suggestions for improvement, and working closely with the internal teams to ensure alignment with our company&#039;s objectives.<br /><br /><b>Hourly Range</b>: $15.00-$30.00\n\n<br />",
+        "August 30, 2023 17:00 UTC"
+    ],
+    "Computer Graphics engineer to implement an interactive web application to warp and blend textures. - Upwork": [
+        "https://www.upwork.com/jobs/Computer-Graphics-engineer-implement-interactive-web-application-warp-and-blend-textures_%7E01c668d048d24d365f?source=rss",
+        "Interactive web application to generate warping and blending data for multiple display outputs of a Windows computer that will be later on ingested by the functions NvAPI_GPU_SetScanoutWarping and NvAPI_GPU_SetScanoutIntensity from the Nvidia NVAPI library.<br /><br />\nWe expect the developer to create a static website that fulfills the main functionality without putting a lot of effort into the look and feel. <br /><br />\nWe are looking for someone who has experience dealing with textures, uv maps, bezier curves, and meshes in 3D.<br /><br /><br /><br /><br />",
+        "August 30, 2023 16:56 UTC"
+    ],
+    "IG Bot Liker/Viewer - Upwork": [
+        "https://www.upwork.com/jobs/Bot-Liker-Viewer_%7E01b128e3eb682aeac2?source=rss",
+        "IG BOT \u27a1\ufe0fstory-liker/viewer<br />\ncreate it so my virtual assistance can run it daily with our agency<br /><br />\nThe script should work on a proxy profile that has already been verified.<br />\nIt should navigate to the matches section and send a predefined message to the first match.<br />\nThe automation should be discreet and efficient.<br /><br /><br /><b>Budget</b>: $99\n<br />",
+        "August 30, 2023 16:52 UTC"
+    ],
+    "Small AI based project - Upwork": [
+        "https://www.upwork.com/jobs/Small-based-project_%7E01694f2a90c1f8c739?source=rss",
+        "Small illustration tool based on a diffusion model or simmaler, for children&#039;s books.<br /><br /><b>Hourly Range</b>: $15.00-$50.00\n\n<br />",
+        "August 30, 2023 16:11 UTC"
+    ],
+    "Custom Power Automate Flow for Scripting Website - Upwork": [
+        "https://www.upwork.com/jobs/Custom-Power-Automate-Flow-for-Scripting-Website_%7E01adf75946dedcb9b6?source=rss",
+        "I need a professional with Microsoft Power Automate skills to extract the name and phone number of businesses from Yellow Pages into an Excel sheet from the first to the fortieth page. Additionally, they should briefly explain how they did it so I can replicate the process from the fortieth page onwards.<br /><br /><b>Budget</b>: $5\n<br />",
+        "August 30, 2023 16:07 UTC"
+    ],
+    "Thinsgboard Signup Page - Upwork": [
+        "https://www.upwork.com/jobs/Thinsgboard-Signup-Page_%7E01754c8c939cd1dfe5?source=rss",
+        "Hello!<br /><br />\nI need my signup page activated which is associated with thingsboard that allows customers to register themselves in our website. <br />\nAlso allowing the registered customer admin account to have an access to allow 5 another users under the same customer hierarchy to monitor the account. <br /><br />\nThe price for the above task is 100 USD. <br />\nJust let me if you are interested. <br /><br />\nEnosh M.<br /><br /><br />",
+        "August 30, 2023 15:59 UTC"
+    ],
+    "Create woocommerce order api and automatic printing with windows software to multiple printers - Upwork": [
+        "https://www.upwork.com/jobs/Create-woocommerce-order-api-and-automatic-printing-with-windows-software-multiple-printers_%7E010e527d2eaef3e7b2?source=rss",
+        "Create woocommerce order api and automatic printing with windows software to multiple printers.<br /><br />\nWho&#039;s available complete the task in two days.<br />\nor You already have existing software.<br /><br />\nor you have a better solution.<br /><br /><br /><b>Budget</b>: $100\n<br />",
+        "August 30, 2023 15:37 UTC"
     ]
 }

@@ -8,7 +8,7 @@ class Job_Posting():
                  connects_required: int | None,
                  connects_available: int | None,
                  client_country: str | None,
-                 chat_gpt_outputs: dict | None) -> None:
+                 chat_gpt_outputs: dict | None = None) -> None:
         self._title = title
         self._url = url,
         self._posted_on = posted_on

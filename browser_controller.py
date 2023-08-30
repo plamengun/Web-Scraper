@@ -1,6 +1,8 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, JSHandle
 from dotenv import load_dotenv
 import os
+from typing import List
+import re
 
 
 load_dotenv()
@@ -33,6 +35,28 @@ def pw_rss_feed_extractor(page, context):
     return rss_feeds
 
 
+def pw_job_posting_scrape(job_url, session_data):
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=50)
+        context = browser.new_context()
+        context.add_cookies(session_data)
+        page = context.new_page()
+
+        page.goto(job_url)
+        description = page.query_selector(f'//div[@data-test="description"]/div').inner_text()
+        connects_required_text = page.query_selector(f'//div[@data-test="connects-auction"]/div').inner_text()
+        connects_required = int(re.findall(r'\d+', connects_required_text)[0])
+        available_connects_text = page.query_selector(f'//div[@data-test="connects-auction"]/div[@class="mt-10"]').inner_text()
+        available_connects = int(re.findall(r'\d+', available_connects_text)[0])
+        posted_on_text = page.query_selector(f'//div[@id="posted-on"]//span[@class]/span').inner_text()
+        client_country_text = page.query_selector(f'//ul[@class = "list-unstyled cfe-ui-job-about-client-visitor m-0-bottom"]/li[@data-qa="client-location"]/strong').inner_text()
+        page.click('//button[@aria-label="Apply Now"]')
+        page.wait_for_event("load")
+        context.close()
+    return description, connects_required, available_connects, posted_on_text, client_country_text
+
+
 def pw_login():
     # This is the driver function.
 
@@ -50,5 +74,6 @@ def pw_login():
         anchor.click()
         page.wait_for_event("load")
         rss_feeds = pw_rss_feed_extractor(page, context)
-        page.close()
-    return rss_feeds
+        session_data = context.cookies()
+        context.close()
+    return rss_feeds, session_data

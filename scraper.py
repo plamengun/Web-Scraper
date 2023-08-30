@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
-from browser_controller import pw_login
+from browser_controller import pw_login, pw_job_posting_scrape
+from common.models import Job_Posting
 import json
 import re
 
@@ -30,7 +31,7 @@ def match_re_pattern(pattern, string: str) -> str:
     return final
 
 
-def extract_job_posts(pages: list[str]):
+def extract_job_posts(pages: list[str], session_data):
     job_dict = {}
     open_storage = load_storage()
 
@@ -50,7 +51,9 @@ def extract_job_posts(pages: list[str]):
                 url = job_post.link.text
                 posted_on = match_re_pattern(posted_on_pattern, xml_to_str)
                 description = match_re_pattern(description_pattern, xml_to_str)
-
+                job_post_data = pw_job_posting_scrape(url, session_data)
+                job_posting = Job_Posting(title, url, posted_on, job_post_data[0], job_post_data[1], job_post_data[2], job_post_data[3])
+                print(job_posting)
                 job_dict[title] = [url, description, posted_on]
 
     open_storage.update(job_dict)
@@ -60,5 +63,5 @@ def extract_job_posts(pages: list[str]):
 
 
 if __name__ == "__main__":
-    pages_to_extract = pw_login()
-    print(extract_job_posts(pages_to_extract))
+    pages_to_extract, session_data = pw_login()
+    print(extract_job_posts(pages_to_extract, session_data))
