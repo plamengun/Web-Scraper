@@ -360,5 +360,160 @@
         "https://www.upwork.com/jobs/Create-woocommerce-order-api-and-automatic-printing-with-windows-software-multiple-printers_%7E010e527d2eaef3e7b2?source=rss",
         "Create woocommerce order api and automatic printing with windows software to multiple printers.<br /><br />\nWho&#039;s available complete the task in two days.<br />\nor You already have existing software.<br /><br />\nor you have a better solution.<br /><br /><br /><b>Budget</b>: $100\n<br />",
         "August 30, 2023 15:37 UTC"
+    ],
+    "Machine Learning Expert | Legal Domain - Upwork": [
+        "https://www.upwork.com/jobs/Machine-Learning-Expert-Legal-Domain_%7E01c836c59583d3f9f5?source=rss",
+        "We are a legal-tech startup looking for an expert machine learning developer who could help us with building the given product requirements.\n\nWe already have:\n- Conversational transcriptions\n- Roughly 10M raw cases data\n- 10k formatted data(Facts, Arguments-Petiotioner,\u00a0\u00a0Arguments-Responded, Ruling , etc)\n- Sections from several acts including IPC , CRPC , etc\nGoal:\n- Statute Prediction from general query\n- Judgement Prediction(with explanation) from given facts\n- Prior case retrieval for a given case(we have experimented with custom embeddings)\n- Special focus on medical insurance case prediction\n\nIssues so far:\n- Embeddings didn't get the best results since they are not trained on legal domain\n- Getting judgment prediction with analysis is an issue because the input exceeds the context window and chunking will lose context\n- Ingesting transcriptions/custom information also raises the same concern of the context window.\n- Prior case retrieval also needs entire case context(along with entire precedent case and their contexts) , which surpasses even 32k context models. One more thing to note is even if we chunk by roles i.e facts, analysis etc , the problem is to find exact relation with specific chunks of the cases i.e Ruling of Precedent X cited in Current case A or Analysis of Precedent Y cited in current case A.\n- Predicting cost of medico-legal insurance along with if we should fight the case or not.\n\n\nFeel free to ping for any further questions.",
+        "10 minutes ago"
+    ],
+    "Automate a Login script using python - Upwork": [
+        "https://www.upwork.com/jobs/Automate-Login-script-using-python_%7E01e340dbe68bd0ff26?source=rss",
+        "I am working on a python script to automate a login process which includes solving the captcha and send that token along side with json data to POST request to the API and then start scraping the data but unfortunately I am facing 401 Unauthorized response at login step and couldn't figure out this.\n\nI am looking for someone who has expertise dealing with this kind of issue. I will share the script in hand in message.\n\nThank you.",
+        "11 minutes ago"
+    ],
+    "Trading bot that activates trades on a tradingviews indicator with computer vision - Upwork": [
+        "https://www.upwork.com/jobs/Trading-bot-that-activates-trades-tradingviews-indicator-with-computer-vision_%7E01dc786b737ed94e8c?source=rss",
+        "Hello!\n\nI need a simple program, that activates trades on a certain indicator on the trading view platform.\n\nI need someone that can make a program that can see the price on a trading app, or two (can pay extra for two) to activate a trade when a certain pattern happens on the Vumanchu market cipher B indicator. So once this happens, there is no active alert, but i need to automatically enter and exit the trades on a certain time frame. I can show details later, just one indicator that changes direction.\n\nIt would also need to be able to place a stop loss once it enters for safety, and the ability to take the desired profit. It must also allow for leverage adjustment..\n\nAs a bonus (willing to pay more) if you can train a ML model to determine when its about to go down and it may be a peak in the price.\n\nMust be able to go both long and short directions.\n\n",
+        "13 minutes ago"
+    ],
+    "Business Development for Portable Power Products - Upwork": [
+        "https://www.upwork.com/jobs/Business-Development-for-Portable-Power-Products_%7E01c6a37f7c5fd25938?source=rss",
+        "south africa korea\nRussia Netherlands\nindonesia italy\nVietnam Spain\nBrazil Poland Malaysia Australia\nThis is a national market that we focus on. We take HONDA as an example. We hope that you can find potential customers of local portable power products and local sales personnel (current or former) of companies like HONDA.\nFeel free to pick one as an example first.\nExamples are as follows:\n\nhttps://www.hondapowerproducts.co.id/products/genset/genset--eu22i\n\nGenerator - EU22i\nEU22i\nhttps://www.linkedin.com/in/yusuf-anwari-93123434/",
+        "16 minutes ago"
+    ],
+    "Informatica Cloud ETL - Upwork": [
+        "https://www.upwork.com/jobs/Informatica-Cloud-ETL_%7E0110c036fcea36d057?source=rss",
+        "I am looking for an ETL developer for Informatica Cloud IICS with at least 5 years experience in Informatica, SQL and Oracle.\n\nInformatica Cloud ICS\nOracle database knowledge\nToad, pl/sql, oracle sql developer, etc.\nPerformance tuning\nSQL for BI / Reporting\nUtilizing various data marts to bring data together for downstream systems per specifications (Power BI, Tableau, OBIEE, Client data exports)\nShell, Python scripting\nCA Atomic - nice to have (Used as scheduler and for a few other processes)\nUnix/Linux - nice to have\n\n\n\nBasic:\n\nFluent Conversational English & written English for technical documentation\nProblem-solving\nCritical thinking\nProactive & work independently as applicable\nCollaborative skills (working in a team environment as applicable)\nDecision-making skills\nPrecision and detail-oriented skills\n\n\nOther details\n\nYou will need to attend the daily scrum meeting\nYou will need to work 10 am - 6 pm Dublin / Irish time\nFull time availability of ~40 hours per week needed.\nYou should not work on any other projects while working on this project\nYou need to be based in EU / EEA\nStart: asap\n6-12 months project",
+        "24 minutes ago"
+    ],
+    "ETL Developer - Upwork": [
+        "https://www.upwork.com/jobs/ETL-Developer_%7E01769e8e8cf78ce741?source=rss",
+        "Job Description: Senior Matillion Developer Nos 1\nRole Overview: We are seeking a skilled and experienced Senior Matillion Developer to play a crucial\nrole in our data engineering team. As the Senior Matillion Developer, you will be responsible for\ndesigning, developing, and maintaining ETL processes using Matillion ETL tools. Your expertise will\ncontribute to the seamless integration and transformation of data, enabling informed business\ndecisions.\nKey Responsibilities:\n\uf0b7 Matillion ETL Development:\n\uf0b7 Design, develop, and optimize ETL workflows using Matillion ETL tools to extract,\ntransform, and load data from various sources to data warehouses or data lakes.\n\uf0b7 Create efficient data transformation jobs, ensuring data accuracy, quality, and\noptimal performance.\n\n\uf0b7 Data Integration:\n\uf0b7 Collaborate with cross-functional teams to understand data requirements and\nintegration needs.\n\uf0b7 Develop data integration solutions that align with business goals and data\narchitecture best practices.\n\uf0b7 Performance Optimization:\n\uf0b7 Identify and address performance bottlenecks in Matillion ETL processes.\n\uf0b7 Implement strategies to enhance processing speed, resource utilization, and overall\nefficiency.\n\uf0b7 Quality Assurance:\n\uf0b7 Conduct thorough testing and validation of ETL processes to ensure accurate data\ntransformation and integration.\n\uf0b7 Implement data quality checks and error handling mechanisms to maintain high-\nquality data.\n\uf0b7 Technical Expertise:\n\uf0b7 Serve as a subject matter expert in Matillion ETL tools, staying updated with the\nlatest features and industry trends.\n\uf0b7 Provide guidance to junior developers and resolve technical challenges as they arise.\n\uf0b7 Documentation:\n\uf0b7 Document ETL processes, data mappings, transformations, and configurations for\nfuture reference and knowledge sharing.\n\n\uf0b7 Continuous Improvement:\n\uf0b7 Proactively identify opportunities for process improvement and automation within\nthe ETL development lifecycle.",
+        "29 minutes ago"
+    ],
+    "Matillion developer - Upwork": [
+        "https://www.upwork.com/jobs/Matillion-developer_%7E01babeb0bf9a63afcd?source=rss",
+        "Position Overview: We are seeking an experienced and highly skilled ETL Team Lead to join our dynamic data engineering team. As the ETL Team Lead, you will be responsible for overseeing the design, development, implementation, and maintenance of our ETL processes using tools such as Informatica, Matillion, and Pentaho. You will lead a team of ETL developers, provide technical guidance, and ensure the successful delivery of data integration projects to meet business objectives.\nKey Responsibilities:\n\u2022 Team Leadership:\n\u2022 Lead, mentor, and manage a team of ETL developers, providing technical guidance, performance feedback, and professional development opportunities.\n\u2022 Collaborate with cross-functional teams to understand project requirements and translate them into actionable tasks for the ETL team.\n\u2022 ETL Design and Development:\n\u2022 Design, develop, and optimize complex ETL processes to extract, transform, and load data from various source systems to target data warehouses or data lakes.\n\u2022 Ensure adherence to best practices for data integration, data quality, and performance optimization.\n\u2022 Implement data transformations, mappings, and workflows using Informatica, Matillion, Pentaho, and other relevant ETL tools.\n\u2022 Technical Expertise:\n\u2022 Serve as a subject matter expert in ETL technologies, including Informatica, Matillion, and Pentaho, staying up-to-date with the latest features, trends, and best practices.\n\u2022 Troubleshoot and resolve complex technical issues related to ETL processes, ensuring the reliability and accuracy of data integration.\n\u2022 Project Management:\n\u2022 Lead the planning, execution, and monitoring of ETL projects, ensuring on-time and on-budget delivery while maintaining high-quality standards.\n\u2022 Collaborate with business stakeholders and project managers to define project scope, goals, and deliverables.\n\u2022 Performance Optimization:\n\u2022 Identify and address performance bottlenecks in ETL processes, making recommendations for enhancements and optimizations.\n\u2022 Monitor ETL job execution and implement strategies to improve processing times and resource utilization.\n\u2022 Documentation and Communication:\n\u2022 Document ETL processes, data mappings, transformations, and other technical specifications.\n\u2022 Communicate effectively with technical and non-technical stakeholders, providing updates on project status, issues, and resolutions.\nQualifications and Requirements:\n\u2022 Bachelor's degree in Computer Science, Information Technology, or a related field. Master's degree preferred.\n\u2022 Proven experience (8+ years) in ETL development using tools such as Informatica, Matillion, and Pentaho.\n\u2022 Previous experience (5 years) in a leadership or supervisory role, managing a team of ETL developers.\n\u2022 Strong proficiency in designing, developing, and optimizing ETL processes for complex data integration scenarios.\n\u2022 In-depth understanding of data warehousing concepts, data modeling, and relational databases.\n\u2022 Solid programming skills in SQL, and scripting languages (Python, Bash, etc.).\n\u2022 Familiarity with cloud platforms (AWS, Azure, GCP) and their ETL services is a plus.\n\u2022 Excellent problem-solving skills and the ability to troubleshoot complex technical issues.\n\u2022 Strong communication and interpersonal skills, with the ability to collaborate effectively with both technical and non-technical teams.\n\u2022 Proven track record of delivering ETL projects on time and meeting business requirements.\n\u2022 Relevant certifications in ETL technologies (Informatica, Matillion, Pentaho) are desirable.\n",
+        "31 minutes ago"
+    ],
+    "Market Analysis: price pattern - Upwork": [
+        "https://www.upwork.com/jobs/Market-Analysis-price-pattern_%7E01b469d3dc3feae8b8?source=rss",
+        "We are seeking a skilled and experienced data analyst to assist us in analyzing our data. The main responsibility will be to analyze and interpret large sets of data to identify patterns, trends, and insights. The ideal candidate should have strong analytical skills and a solid understanding of statistical analysis methods. Strong proficiency in data visualization tools and techniques is also required. Additionally, experience with Python, SQL, and Excel is preferred. The successful candidate will be able to communicate findings and present data-driven insights effectively. Attention to detail and the ability to meet deadlines is essential.",
+        "44 minutes ago"
+    ],
+    "PLC programming specialist - Upwork": [
+        "https://www.upwork.com/jobs/PLC-programming-specialist_%7E0190d6a82eb9492009?source=rss",
+        "Do you have any experience about PLC programming at industrial level.I want to fix my panel control with expert of Programming.\nI have a UK machinery,I am going to install all this machinery.I want to also install my electric panel.Need suggestion and expertise .",
+        "45 minutes ago"
+    ],
+    "[Java Hadoop expert] I need help with making a program with MapReduce - Upwork": [
+        "https://www.upwork.com/jobs/Java-Hadoop-expert-need-help-with-making-program-with-MapReduce_%7E0190cb58214897ad82?source=rss",
+        "\nIt's java hadoop mapreduce task.\n\nThe program should run on windows OS.\n\nAn algorithm must be devised and implemented that can recognize the language of a given text.\n\nThank you.",
+        "45 minutes ago"
+    ],
+    "Simple blockchain integration - Upwork": [
+        "https://www.upwork.com/jobs/Simple-blockchain-integration_%7E0171530cb5fcdc09d8?source=rss",
+        "Hello,\ni want to integrate blockchain system to the simple web page\n\nwhat i am looking for is\n\njust take a data & fetch this on the database or image publicly\n\ni will explain more in the chats.\n\nThank you.",
+        "September 01, 2023 07:57 UTC"
+    ],
+    "Find Official Private Key For TRX Wallet - Upwork": [
+        "https://www.upwork.com/jobs/Find-Official-Private-Key-For-TRX-Wallet_%7E016de1916fcdaab4a4?source=rss",
+        "I'm looking for a crypto hacking expert that knows how to find a private key to my TRX wallet so I can collect my funds.\n\nI need this done urgently.\n\nI have a good financial reward to the person that can do this.\n\n",
+        "September 01, 2023 07:56 UTC"
+    ],
+    "Scraper / lead generator  - Upwork": [
+        "https://www.upwork.com/jobs/Scraper-lead-generator_%7E010b87e0791a12cb46?source=rss",
+        "Hi there,\n\nWe are looking for someone who can help us scrape / build a list for all affiliates who are a promoting our competitor's product.\n\nNeed an an ethical way to scrape or manually collect all public YouTubers / Instagrammers and Twitter accounts that are related.\n\nLooking forward to hearing back from you.\n\nCheers.",
+        "September 01, 2023 07:52 UTC"
+    ],
+    "Matillion ETL Developer - Upwork": [
+        "https://www.upwork.com/jobs/Matillion-ETL-Developer_%7E01f651a5dd5b87f2b9?source=rss",
+        "Exp- 5 to 8 Years\nRemote\nHandle multiple projects in parallel, Participate and deliver Solution design, working closely with the architecture team \u2022 Understand business requirements and convert them into detail technical specifications for Data models and ETL programs \u2022 Design the Logical and Physical data models using the Dimensional modeling techniques.\nDesign and Develop/Review ETL programs primarily using Matillion, Python and R \u2022 Coach and guide the technical team in terms development of ETL jobs \u2022 Performance improvement & tuning of Matillion mappings.\nTechnical reviews, Data validation & end to end testing of ETL Objects, Source data analysis and data profiling.\nCreate necessary documentation as per the Standards and Update the project documentation.\nSupport QE on End-to-End testing and provide daily/weekly project status to the Project manager \u2022 Work with deployment team in the code migration across the environments \u2022 Triage the Production issues and work on the code fixes \u2022 Experience with Matillion configuration/Administration and Security setup will be added advantage.\nShould be very Good Team Player with Excellent verbal and written communication skills.",
+        "September 01, 2023 07:48 UTC"
+    ],
+    "Create tiktok bot that will watch my livestream and follow me - Upwork": [
+        "https://www.upwork.com/jobs/Create-tiktok-bot-that-will-watch-livestream-and-follow_%7E01c9c8e8e295895452?source=rss",
+        "So i need bot with at least 100+ account that will watch my Livestream, and will follow my own tiktok account. The increments in view and follow while i stream can be arranged",
+        "September 01, 2023 07:34 UTC"
+    ],
+    "Linear programming - Price optimisation for project based work - Upwork": [
+        "https://www.upwork.com/jobs/Linear-programming-Price-optimisation-for-project-based-work_%7E01f53d4e550289cd2d?source=rss",
+        "Please contact me directly - Email supplied in private message",
+        "September 01, 2023 07:32 UTC"
+    ],
+    "Embedded engineer - Upwork": [
+        "https://www.upwork.com/jobs/Embedded-engineer_%7E01f85cb5fc27ffcfa3?source=rss",
+        "Looking for Embedded Engineer who\u00a0\u00a0have experience in high end microprocessor, microcontroller. Programming experience in Embedded C, Python. Strong knowledge of\u00a0\u00a0Hardware architecture.\u00a0\u00a0Knowledge of\u00a0\u00a0debugging hardware, PCB schematics, etc. Should have experience to work on various operating\u00a0\u00a0systems like Linux, windows. Experience in device driver like GPIO, UART, SPI, I2C, USB, ADC ,RS-485, RS-232, Modbus TCP/IP, GSM.",
+        "September 01, 2023 07:16 UTC"
+    ],
+    "Help posting job ad and recruiting - Upwork": [
+        "https://www.upwork.com/jobs/Help-posting-job-and-recruiting_%7E01f2b29cd14f8ac868?source=rss",
+        "windsor.ai is looking for skilled python developers.\n\nWe are looking for help to post the job-ad on different eastern european job-boards.\n\nThe current job-ad is here: https://jobs.dou.ua/companies/windsor-ai/vacancies/157903/\n\n",
+        "September 01, 2023 07:14 UTC"
+    ],
+    "Build React/Django Site to manage queue system  - Upwork": [
+        "https://www.upwork.com/jobs/Build-React-Django-Site-manage-queue-system_%7E01a9271cfbd3aa42cd?source=rss",
+        16,
+        "September 01, 2023 10:16 UTC"
+    ],
+    "Client Manager in TDlib - Upwork": [
+        "https://www.upwork.com/jobs/Client-Manager-TDlib_%7E01516ca67646601014?source=rss",
+        4,
+        "September 01, 2023 10:14 UTC"
+    ],
+    "Software Developer for New Concept Website - Upwork": [
+        "https://www.upwork.com/jobs/Software-Developer-for-New-Concept-Website_%7E01b8fbeb1530be181d?source=rss",
+        16,
+        "September 01, 2023 10:08 UTC"
+    ],
+    "Hello Unreal Engine 5 Blueprint Experts, - Upwork": [
+        "https://www.upwork.com/jobs/Hello-Unreal-Engine-Blueprint-Experts_%7E0107816e21ec065886?source=rss",
+        12,
+        "September 01, 2023 10:04 UTC"
+    ],
+    "Seeking expert to set up Cloudflare solution to stop crawlers / bots from visiting us - Upwork": [
+        "https://www.upwork.com/jobs/Seeking-expert-set-Cloudflare-solution-stop-crawlers-bots-from-visiting_%7E01a06283cfe36cbcdc?source=rss",
+        16,
+        "September 01, 2023 10:02 UTC"
+    ],
+    "Big Data Operation &amp; Maintenance Engineer \u5927\u6570\u636e\u8fd0\u7ef4\u5de5\u7a0b\u5e08 - Upwork": [
+        "https://www.upwork.com/jobs/Big-Data-Operation-amp-Maintenance-Engineer_%7E01123ada9197132658?source=rss",
+        16,
+        "September 01, 2023 09:43 UTC"
+    ],
+    "FPGA VHDL designer - Upwork": [
+        "https://www.upwork.com/jobs/FPGA-VHDL-designer_%7E0184e0b8a49b87268c?source=rss",
+        8,
+        "September 01, 2023 09:40 UTC"
+    ],
+    "Strategy coding for Api integration - Upwork": [
+        "https://www.upwork.com/jobs/Strategy-coding-for-Api-integration_%7E01209ea829c1b94343?source=rss",
+        12,
+        "September 01, 2023 09:37 UTC"
+    ],
+    "Software Developer CAD/CAM with CNC &amp; Sheet Fabrication Experience  - Upwork": [
+        "https://www.upwork.com/jobs/Software-Developer-CAD-CAM-with-CNC-amp-Sheet-Fabrication-Experience_%7E01d0fdb681968217c7?source=rss",
+        16,
+        "September 01, 2023 09:14 UTC"
+    ],
+    " Youtube to Youtube Music - Upwork": [
+        "https://www.upwork.com/jobs/Youtube-Youtube-Music_%7E01614b00eab57ac166?source=rss",
+        8,
+        "September 01, 2023 09:11 UTC"
+    ],
+    "Python Scraper - Website Script Developer - Upwork": [
+        "https://www.upwork.com/jobs/Python-Scraper-Website-Script-Developer_%7E01a3dc5042f0040053?source=rss",
+        "We are looking for someone to create a python script to extract data from a website. We want to run this script locally.\n\nThe candidate must be excellent in using Python, beautiful soup etc.",
+        "September 01, 2023 10:30 UTC"
+    ],
+    "Skill Learning - Upwork": [
+        "https://www.upwork.com/jobs/Skill-Learning_%7E01b4bd904cb44fb191?source=rss",
+        "I am looking for someone who can help me learn a specific skill. The ideal candidate will have experience in teaching and be able to provide hands-on guidance and instructions. The main goal is to gain a solid understanding and practical knowledge of the skill. The candidate should be able to tailor the teaching approach based on my learning style and pace. Prior experience in skill coaching or tutoring would be a plus. Time commitment and frequency can be discussed and agreed upon. Patient and effective communication skills are highly desired.",
+        "September 01, 2023 10:23 UTC"
+    ],
+    "QGIS Plug-in Development - Upwork": [
+        "https://www.upwork.com/jobs/QGIS-Plug-Development_%7E011779a499e11f889f?source=rss",
+        "QGIS Plug-in Development\nWe are seeking an experienced software developer to create a custom plug-in for QGIS, version 3.28 or higher, that will revolutionize the process of determining optimal wind farm locations. The final product will be a powerful tool to automatically identify prospective zones for wind farm placement based on specified input criteria.\nKey Features:\n\u00a0\u00a0\u00a0\u00a0\u2022 Automated determination of perspective zones for wind farm locations.\n\u00a0\u00a0\u00a0\u00a0\u2022 Seamless integration as a QGIS plug-in.\n\u00a0\u00a0\u00a0\u00a0\u2022 Intuitive user interface for setting search criteria.\n\u00a0\u00a0\u00a0\u00a0\u2022 Visualization of identified areas as polygons.\nPlug-in Usage:\n\u00a0\u00a0\u00a0\u00a01. Installation\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a01. Install the plug-in from the provided package or QGIS repository.\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a02.\u00a0\u00a0Load the required layers into QGIS.\n\u00a0\u00a0\u00a0\u00a02. Configure search criteria.\n\u00a0\u00a0\u00a0\u00a03. Initiate the wind site area search.\n\u00a0\u00a0\u00a0\u00a04. Manual change of the polygons.\n\u00a0\u00a0\u00a0\u00a05. Update the statistics of polygons.\nPlug-in Results:\n\u00a0\u00a0\u00a0\u00a01. Polygons which meet search criteria depicted on the map.\n\u00a0\u00a0\u00a0\u00a02. Key statistics calculated for each polygon as its attribute, depicted on the map.\nThe plug-in will efficiently identify intersections of layers based on the specified criteria, displaying the results as polygons and statistics of each polygon. The input data for calculations can be accessed via the provided link.\nSupport and System Requirements: The selected developer will be required to provide support for the software for a period of 2 months after project completion. The software should be compatible with the following operating systems:\n\u00a0\u00a0\u00a0\u00a0\u2022 Windows 7 or higher\n\u00a0\u00a0\u00a0\u00a0\u2022 Linux Mint 21.2 or higher\nBefore commencing work, the developer must sign a Software Development Agreement.\nProposal Requirements: If you are experienced in developing QGIS plug-ins and are interested in this project, please include the word \"QGIS\" at the beginning of your proposal. Additionally, kindly provide the following information:\n\u00a0\u00a0\u00a0\u00a0\u2022 Estimated project timeline.\n\u00a0\u00a0\u00a0\u00a0\u2022 Development cost estimate.\nThis is an exciting opportunity to contribute to a cutting-edge project in the field of renewable energy. If you're ready to take on this challenge and make a significant impact, we look forward to receiving your proposal.\nPlease propose your delivery schedule in order to meet the Deadline of September 15th",
+        "September 01, 2023 08:59 UTC"
     ]
 }

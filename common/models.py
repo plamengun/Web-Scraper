@@ -3,7 +3,7 @@ class Job_Posting():
     def __init__(self, 
                  title: str | None, 
                  url: str | None, 
-                 posted_on: str | None, 
+                 posted_before: str | None, 
                  description: str | None,
                  connects_required: int | None,
                  connects_available: int | None,
@@ -11,7 +11,7 @@ class Job_Posting():
                  chat_gpt_outputs: dict | None = None) -> None:
         self._title = title
         self._url = url,
-        self._posted_on = posted_on
+        self._posted_before = posted_before
         self._description = description
         self._connects_required = connects_required
         self._connects_available = connects_available
@@ -27,8 +27,8 @@ class Job_Posting():
         return self._url
     
     @property
-    def posted_on(self):
-        return self._posted_on
+    def posted_before(self):
+        return self._posted_before
     
     @property
     def description(self):
@@ -62,24 +62,24 @@ class Job_Posting():
 
 
 
-class Job_Posting_Record(Job_Posting):
-    def __init__(self, 
-                 job_link, 
-                 date_submitted, 
-                 time_job_posted_ago, 
-                 job_total_proposals, 
-                 sent_status,
-                 connects_spent, 
-                 boosted,
-                 boosted_place,
-                 uk_only) -> None:
-        self.job_link = job_link
-        self.date_submitted = date_submitted
-        self.time_job_posted_ago = time_job_posted_ago
-        self.job_total_proposals = job_total_proposals
-        self.sent_status = sent_status
-        self.connects_spent = connects_spent
-        self.boosted = boosted
-        self.boosted_place = boosted_place
-        self.uk_only = uk_only
+# class Job_Posting_Record(Job_Posting):
+#     def __init__(self, 
+#                  job_link, 
+#                  date_submitted, 
+#                  time_job_posted_ago, 
+#                  job_total_proposals, 
+#                  sent_status,
+#                  connects_spent, 
+#                  boosted,
+#                  boosted_place,
+#                  uk_only) -> None:
+#         self.job_link = job_link
+#         self.date_submitted = date_submitted
+#         self.time_job_posted_ago = time_job_posted_ago
+#         self.job_total_proposals = job_total_proposals
+#         self.sent_status = sent_status
+#         self.connects_spent = connects_spent
+#         self.boosted = boosted
+#         self.boosted_place = boosted_place
+#         self.uk_only = uk_only
 
