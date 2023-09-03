@@ -35,7 +35,7 @@ def extract_data_from_xml(job_post):
     return posted_on
 
 
-def unpack_job_post_data(title: str, url: str, job_post_data: tuple):
+def unpack_job_post_data(title: str, url: str, job_post_data: tuple) -> Job_Posting:
     title = title
     url = url
     posted_before, description, connects_required, connects_available, client_country = job_post_data

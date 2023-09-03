@@ -18,7 +18,7 @@ def calculate_connects(connects_required: int = 12, available_connects: int = 1)
 job_application = 'https://www.upwork.com/ab/proposals/job/~0174eebd2faa73997b/apply/'
 
 
-def pw_proposal_fields_to_fill() -> JSHandle | List[str] | List[JSHandle]:
+def pw_proposal_fields_to_fill() -> JSHandle | dict[str: JSHandle]:
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=50)
         context = browser.new_context()
@@ -40,10 +40,11 @@ def pw_proposal_fields_to_fill() -> JSHandle | List[str] | List[JSHandle]:
                 text_content = element.text_content().strip()
                 questions_texts_list.append(text_content)
             question_fields = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
+            questions_with_fields_dict = {key:value for key, value in zip(questions_texts_list, question_fields)}
 
         cover_letter_field = page.query_selector('//div[@class="cover-letter-area"]//textarea')
 
-    return  cover_letter_field, questions_texts_list, question_fields
+    return  cover_letter_field, questions_with_fields_dict
 
 print(pw_proposal_fields_to_fill())
 

@@ -14,9 +14,9 @@ class Job_Posting():
         self._posted_before = posted_before
         self._description = description
         self._connects_required = connects_required
-        self._connects_available = connects_available
+        self.connects_available = connects_available
         self._client_country = client_country
-        self._chat_gpt_outputs = chat_gpt_outputs
+        self.chat_gpt_outputs = chat_gpt_outputs
 
     @property
     def title(self):
@@ -39,18 +39,9 @@ class Job_Posting():
         return self._connects_required
     
     @property
-    def connects_available(self):
-        return self._connects_available
-    
-    @property
     def client_country(self):
         return self._client_country
     
-    @property
-    def chat_gpt_outputs(self):
-        return self._chat_gpt_outputs
-    
-
     def check_available_connects(self) -> str | None:
         if self.connects_available - self.connects_required >= 0:
             return 'True'
@@ -59,6 +50,20 @@ class Job_Posting():
         if self.chat_gpt_outputs:
             return 'True'
 
+    def convert_to_json(self):
+        job_post_json = {
+            "fields": {
+                "title": self.title,
+                "url": self.url,
+                "posted_before": self.posted_before,
+                "description": self.description,
+                "connects_required": self.connects_required,
+                "connects_available": self.connects_available,
+                "client_country": self.client_country,
+                "chat_gpt_outputs": self.chat_gpt_outputs,
+            }
+        }
+        return job_post_json
 
 
 
