@@ -139,7 +139,28 @@ QGIS Plug-in Development\nWe are seeking an experienced software developer to cr
 """
 
 
-def askgpt(question, chat_log=None):
+# def askgpt(question, chat_log=None):
+#     if chat_log is None:
+#         chat_log = [{
+#             'role': 'system',
+#             'content': """As a marketing professional with over five years of experience, 
+#                             you are actively bidding on relevant job postings on Upwork. 
+#                             To streamline this process, you're leveraging personalized templates that comprise an introduction and a body.
+#                             These templates are adapted according to the specific job post to reflect a professional, confident, and friendly tone.
+#                             At the end of the template there are examples of job posts and examples of proposals to help you write.
+#                             You can find the job posting that you need to apply to under JOB POSTING title."""
+#         }]
+#     chat_log.append({'role': 'user', 'content': question})
+#     response = completion.create(model='gpt-3.5-turbo', messages=chat_log)
+#     answer = response.choices[0]['message']['content']
+#     chat_log.append({'role': 'assistant', 'content': answer})
+#     return answer
+
+# print(askgpt(PROMPT))
+
+
+
+def askgpt(questions, chat_log=None):
     if chat_log is None:
         chat_log = [{
             'role': 'system',
@@ -147,13 +168,34 @@ def askgpt(question, chat_log=None):
                             you are actively bidding on relevant job postings on Upwork. 
                             To streamline this process, you're leveraging personalized templates that comprise an introduction and a body.
                             These templates are adapted according to the specific job post to reflect a professional, confident, and friendly tone.
-                            At the end of the template there are examples of job posts and examples of proposals to help you write.
+                            At the end of the template, there are examples of job posts and examples of proposals to help you write.
                             You can find the job posting that you need to apply to under JOB POSTING title."""
         }]
+    
+    if not questions:
+        return chat_log
+    
+    question = questions[0]
     chat_log.append({'role': 'user', 'content': question})
-    response = completion.create(model='gpt-3.5-turbo', messages=chat_log)
-    answer = response.choices[0]['message']['content']
+    
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt="\n".join([message['content'] for message in chat_log]),
+        max_tokens=100
+    )
+    
+    answer = response.choices[0]['text']
     chat_log.append({'role': 'assistant', 'content': answer})
-    return answer
+    
+    # Recursively call askgpt with the remaining questions
+    return askgpt(questions[1:], chat_log)
 
-print(askgpt(PROMPT))
+# Example usage:
+questions = [PROMPT, "What are some tips for writing an effective proposal?", "How can I stand out to clients on Upwork?"]
+log = askgpt(questions)
+# print(log)
+# for entry in log:
+#     print(entry)
+for entry in log:
+    if entry['role'] == 'assistant':
+        print(entry['content'])

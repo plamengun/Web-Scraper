@@ -12,9 +12,16 @@ def pw_new_page(context, button):
     with context.expect_page() as new_page_info:
         button.click()
         return new_page_info
+    
+def pw_go_to_application_page(context, button):
+    with context.expect_page() as new_page_info:
+        button.click()
+        new_page_info.wait_for_event("load")
+        application_page_url = new_page_info.url
+        return application_page_url
 
 
-def pw_rss_feed_extractor(page, context):
+def pw_rss_feed_scrape(page, context):
     n = 0
     rss_feeds = []
     while n < 1:
@@ -50,10 +57,44 @@ def pw_job_posting_scrape(job_url, session_data):
         available_connects = int(re.findall(r'\d+', available_connects_text)[0])
         posted_before_text = page.query_selector(f'//div[@id="posted-on"]//span[@class]/span').inner_text()
         client_country_text = page.query_selector(f'//ul[@class = "list-unstyled cfe-ui-job-about-client-visitor m-0-bottom"]/li[@data-qa="client-location"]/strong').inner_text()
-        page.click('//button[@aria-label="Apply Now"]')
+        page.click(f'//button[@aria-label="Apply Now"]')
         page.wait_for_event("load")
+        application_page_url = page.url
         context.close()
-    return posted_before_text, description, connects_required, available_connects, client_country_text
+    return posted_before_text, description, connects_required, available_connects, client_country_text, application_page_url
+
+
+# job_application = 'https://www.upwork.com/ab/proposals/job/~0174eebd2faa73997b/apply/'
+
+
+def pw_job_post_application_page_scrape(application_page_url, session_data):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=50)
+        context = browser.new_context()
+        context.add_cookies(session_data)
+        page = context.new_page()
+
+        page.goto(application_page_url)
+        questions_texts_list = []
+        if page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
+            questions_elements = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//label[@class="up-label"]')
+            for element in questions_elements:
+                text_content = element.text_content().strip()
+                questions_texts_list.append(text_content)
+            question_fields_list = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
+            # questions_with_fields_dict = {key:value for key, value in zip(questions_texts_list, question_fields_list)}
+
+        cover_letter_field = page.query_selector('//div[@class="cover-letter-area"]//textarea')
+
+    return  cover_letter_field, question_fields_list, questions_texts_list
+
+# print(pw_proposal_fields_to_fill())
+
+
+def add_first_prompt(fields: tuple):
+    cover_letter_field, question_fields_list, questions_texts_list = fields
+
+
 
 
 def pw_login():
@@ -70,7 +111,9 @@ def pw_login():
         anchor = page.locator(f"//div[@data-test='saved-searches']//span/a[@data-test-key='my_ideal_search']")
         anchor.click()
         page.wait_for_event("load")
-        rss_feeds = pw_rss_feed_extractor(page, context)
+        rss_feeds = pw_rss_feed_scrape(page, context)
         session_data = context.cookies()
         context.close()
     return rss_feeds, session_data
+
+

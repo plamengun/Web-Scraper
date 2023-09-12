@@ -38,6 +38,10 @@ def extract_data_from_xml(job_post):
 def unpack_job_post_data(title: str, url: str, job_post_data: tuple) -> Job_Posting:
     title = title
     url = url
-    posted_before, description, connects_required, connects_available, client_country = job_post_data
-    job_posting = Job_Posting(title, url, posted_before, description, connects_required, connects_available, client_country)
+    posted_before, description, connects_required, connects_available, client_country, application_page_url = job_post_data
+    job_posting = Job_Posting(title, url, posted_before, description, connects_required, connects_available, client_country, application_page_url)
     return job_posting
+
+
+def unpack_job_posting_application_page_data(job_post_application_page_data: tuple):
+    cover_letter_field, question_fields_list, questions_texts_list = job_post_application_page_data

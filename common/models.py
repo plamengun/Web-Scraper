@@ -8,6 +8,7 @@ class Job_Posting():
                  connects_required: int | None,
                  connects_available: int | None,
                  client_country: str | None,
+                 application_page_url: str | None,
                  chat_gpt_outputs: dict | None = None) -> None:
         self._title = title
         self._url = url,
@@ -16,6 +17,7 @@ class Job_Posting():
         self._connects_required = connects_required
         self.connects_available = connects_available
         self._client_country = client_country
+        self._application_page_url = application_page_url
         self.chat_gpt_outputs = chat_gpt_outputs
 
     @property
@@ -42,13 +44,19 @@ class Job_Posting():
     def client_country(self):
         return self._client_country
     
+    @property
+    def application_page_url(self):
+        return self._application_page_url
+    
     def check_available_connects(self) -> str | None:
         if self.connects_available - self.connects_required >= 0:
-            return 'True'
+            return True
+        return False
 
     def check_for_gpt_response(self):
         if self.chat_gpt_outputs:
-            return 'True'
+            return True
+        return False
 
     def convert_to_json(self):
         job_post_json = {
