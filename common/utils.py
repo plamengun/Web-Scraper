@@ -1,6 +1,6 @@
 import json
 import re
-from common.models import Job_Posting
+from common.models import Job_Posting, Job_Application
 
 
 PATH = 'common/storage.py'
@@ -43,5 +43,7 @@ def unpack_job_post_data(title: str, url: str, job_post_data: tuple) -> Job_Post
     return job_posting
 
 
-def unpack_job_posting_application_page_data(job_post_application_page_data: tuple):
+def unpack_job_posting_application_page_data(job_post_application_page_data: tuple, job_posting_description: str) -> Job_Application:
     cover_letter_field, question_fields_list, questions_texts_list = job_post_application_page_data
+    job_application =  Job_Application(job_posting_description, cover_letter_field, question_fields_list, questions_texts_list)
+    return job_application

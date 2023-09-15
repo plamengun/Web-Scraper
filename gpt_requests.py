@@ -191,11 +191,11 @@ def askgpt(questions, chat_log=None):
     return askgpt(questions[1:], chat_log)
 
 # Example usage:
-questions = [PROMPT, "What are some tips for writing an effective proposal?", "How can I stand out to clients on Upwork?"]
-log = askgpt(questions)
-# print(log)
+# questions = [PROMPT, "What are some tips for writing an effective proposal?", "How can I stand out to clients on Upwork?"]
+# log = askgpt(questions)
+# # print(log)
+# # for entry in log:
+# #     print(entry)
 # for entry in log:
-#     print(entry)
-for entry in log:
-    if entry['role'] == 'assistant':
-        print(entry['content'])
+#     if entry['role'] == 'assistant':
+#         print(entry['content'])

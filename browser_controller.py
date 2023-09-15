@@ -82,19 +82,8 @@ def pw_job_post_application_page_scrape(application_page_url, session_data):
                 text_content = element.text_content().strip()
                 questions_texts_list.append(text_content)
             question_fields_list = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
-            # questions_with_fields_dict = {key:value for key, value in zip(questions_texts_list, question_fields_list)}
-
         cover_letter_field = page.query_selector('//div[@class="cover-letter-area"]//textarea')
-
     return  cover_letter_field, question_fields_list, questions_texts_list
-
-# print(pw_proposal_fields_to_fill())
-
-
-def add_first_prompt(fields: tuple):
-    cover_letter_field, question_fields_list, questions_texts_list = fields
-
-
 
 
 def pw_login():
