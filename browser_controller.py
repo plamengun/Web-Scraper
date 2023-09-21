@@ -13,12 +13,12 @@ def pw_new_page(context, button):
         button.click()
         return new_page_info
     
-def pw_go_to_application_page(context, button):
-    with context.expect_page() as new_page_info:
-        button.click()
-        new_page_info.wait_for_event("load")
-        application_page_url = new_page_info.url
-        return application_page_url
+# def pw_go_to_application_page(context, button):
+#     with context.expect_page() as new_page_info:
+#         button.click()
+#         new_page_info.wait_for_event("load")
+#         application_page_url = new_page_info.url
+#         return application_page_url
 
 
 def pw_rss_feed_scrape(page, context):

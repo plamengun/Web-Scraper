@@ -74,11 +74,13 @@ class Job_Application():
                  cover_letter_field: JSHandle,
                  question_fields: list[JSHandle] | None = None,
                  question_texts: list[str] | None = None,
+                 answer_texts: list[str] | None = None,
                  chat_log: list[str] | None = None) -> None:
         self.job_posting_description = job_posting_description
         self.cover_letter_field = cover_letter_field
         self.question_fields = question_fields
         self.question_texts= question_texts
+        self._answer_texts = answer_texts
         self.chat_log = chat_log
 
     def add_description_to_questions(self):
@@ -86,7 +88,14 @@ class Job_Application():
             self.question_texts = [self.job_posting_description] 
         self.question_texts.insert(0, self.job_posting_description)
 
+    @property
+    def answer_texts(self):
+        return self._answer_texts
+    
+    @answer_texts.setter
     def extract_answers_from_log(self) -> list[str]:
+        if self.chat_log is None:
+            raise ValueError('No answers found')
         answer_texts = [entry['content'] for entry in self.chat_log if entry['role'] == 'assistant']
         return answer_texts
 
