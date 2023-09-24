@@ -1,4 +1,5 @@
 from playwright.sync_api import sync_playwright
+from common.utils import create_job_application, _get_gpt_answers
 from dotenv import load_dotenv
 import os
 import re
@@ -126,15 +127,54 @@ class UpworkScraper:
         self.page.wait_for_event("load")
         application_page_url = self.page.url
         return application_page_url
+    
+
+    def check_application_page_type(self):
+            by_milestone = self.page.locator("/fieldset[@id='milestoneMode']").is_visible()
+            by_hour = self.page.get_by_text("What is the rate you'd like to bid for this job?").is_visible()
+            by_project = self.page.get_by_text("What is the full amount you'd like to bid for this job?").is_visible()
+            if by_milestone:
+                self.page.get_by_text("By project").click()
+                self.page.get_by_text('Select a duration').click()
+                self.page.get_by_text('1 to 3 months').click()
+                return 'milestone'
+            if by_hour:
+                self.page.get_by_text('Select a duration').click()
+                self.page.get_by_text('1 to 3 months').click()
+                return 'hour'
+            if by_project:
+                self.page.get_by_text('Select a duration').click()
+                self.page.get_by_text('1 to 3 months').click()
+                return 'project'
+            else:
+                return None
 
 
-    def job_post_application_page_scrape(self):
+    def job_posting_apply(self):
+        self.check_application_page_url(self.page.url)
         questions_texts_list = []
+        question_fields_list = []
+        cover_letter_field = self.page.query_selector('//div[@class="cover-letter-area"]//textarea')
+        description = self.page.query_selector(f"//div[@class='description']").text_content()
+
         if self.page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
             questions_elements = self.page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//label[@class="up-label"]')
             for element in questions_elements:
                 text_content = element.text_content().strip()
                 questions_texts_list.append(text_content)
             question_fields_list = self.page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
-        cover_letter_field = self.page.query_selector('//div[@class="cover-letter-area"]//textarea')
-        return cover_letter_field, question_fields_list, questions_texts_list
+            question_fields_list.insert(0, cover_letter_field)
+
+        job_application = create_job_application(description)
+        job_application.question_texts = questions_texts_list
+
+        answers = _get_gpt_answers(job_application)
+
+        for i, element in enumerate((question_fields_list)):
+            if i < len(answers):
+                element.fill(answers[i])
+
+        print(self.check_application_page_type())
+
+        return 'Job Application Successful'
+

@@ -1,6 +1,7 @@
 import json
 import re
 from common.models import Job_Posting, Job_Application
+from gpt_requests import askgpt
 
 
 PATH = 'common/storage.py'
@@ -29,13 +30,13 @@ def match_re_pattern(pattern, string: str) -> str:
     return final
 
 
-def extract_data_from_xml(job_post):
+def extract_data_from_xml(job_post: Job_Posting):
     xml_to_str = job_post.description.text
     posted_on = match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
     return posted_on
 
 
-def unpack_job_post_data(title: str, url: str, job_post_data: tuple) -> Job_Posting:
+def create_job_posting(title: str, url: str, job_post_data: tuple) -> Job_Posting:
     title = title
     url = url
     posted_before, description, connects_required, connects_available, client_country, application_page_url = job_post_data
@@ -43,7 +44,16 @@ def unpack_job_post_data(title: str, url: str, job_post_data: tuple) -> Job_Post
     return job_posting
 
 
-def unpack_job_posting_application_page_data(job_post_application_page_data: tuple, job_posting_description: str) -> Job_Application:
-    cover_letter_field, question_fields_list, questions_texts_list = job_post_application_page_data
-    job_application =  Job_Application(job_posting_description, cover_letter_field, question_fields_list, questions_texts_list)
+def create_job_application(job_posting_description: str) -> Job_Application:
+    job_application =  Job_Application(job_posting_description)
     return job_application
+
+
+def _get_gpt_answers(job_application: Job_Application) -> list[str]:
+    
+    job_application.add_description_to_questions()
+    chat_log = askgpt(job_application.question_texts)
+    job_application.chat_log = chat_log
+    answers = job_application.answer_texts
+
+    return answers

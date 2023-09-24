@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from browser_controller import pw_login, pw_job_posting_scrape, pw_job_post_application_page_scrape
-from common.utils import load_storage, save_storage, extract_data_from_xml, unpack_job_post_data, unpack_job_posting_application_page_data
+from common.utils import load_storage, save_storage, extract_data_from_xml, create_job_posting, create_job_application
 from gpt_requests import askgpt
 
 
@@ -21,9 +21,9 @@ def driver(pages: list[str], session_data):
                 title = job_post.title.text
                 url = job_post.link.text
                 job_post_data = pw_job_posting_scrape(url, session_data)
-                job_posting = unpack_job_post_data(title, url, job_post_data)
+                job_posting = create_job_posting(title, url, job_post_data)
                 job_post_application_page_data = pw_job_post_application_page_scrape(job_posting.application_page_url, session_data)
-                job_application = unpack_job_posting_application_page_data(job_post_application_page_data, job_posting.description)
+                job_application = create_job_application(job_post_application_page_data, job_posting.description)
                 job_application.add_description_to_questions()
                 chat_log = askgpt(job_application.question_texts)
                 job_application.chat_log = chat_log

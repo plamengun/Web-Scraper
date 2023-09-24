@@ -1,5 +1,3 @@
-from playwright.sync_api import JSHandle
-
 
 class Job_Posting():
     def __init__(self, 
@@ -71,14 +69,14 @@ class Job_Posting():
 class Job_Application():
     def __init__(self,
                  job_posting_description: str,
-                 cover_letter_field: JSHandle,
-                 question_fields: list[JSHandle] | None = None,
+                #  cover_letter_field: JSHandle,
+                #  question_fields: list[JSHandle] | None = None,
                  question_texts: list[str] | None = None,
                  answer_texts: list[str] | None = None,
                  chat_log: list[str] | None = None) -> None:
         self.job_posting_description = job_posting_description
-        self.cover_letter_field = cover_letter_field
-        self.question_fields = question_fields
+        # self.cover_letter_field = cover_letter_field
+        # self.question_fields = question_fields
         self.question_texts= question_texts
         self._answer_texts = answer_texts
         self.chat_log = chat_log
@@ -90,20 +88,19 @@ class Job_Application():
 
     @property
     def answer_texts(self):
+        if self._answer_texts is None:
+            self._answer_texts = self.extract_answers_from_log()
         return self._answer_texts
     
     @answer_texts.setter
+    def answer_texts(self, value):
+        self._answer_texts = value
+
     def extract_answers_from_log(self) -> list[str]:
         if self.chat_log is None:
             raise ValueError('No answers found')
         answer_texts = [entry['content'] for entry in self.chat_log if entry['role'] == 'assistant']
-        return answer_texts
-
-
-
-    #ToDo Automatically add job_posting_description in 0 position in answer_texts upon instantiation
-
-
+        return answer_texts 
 
 
 
