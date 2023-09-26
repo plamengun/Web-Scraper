@@ -520,5 +520,10 @@
         "https://www.upwork.com/jobs/Data-warehousing-mentor_%7E01d0a62a40c3aad1a9?source=rss",
         "Hello\n\nI am looking for a data warehouse professional / mentor who I can discuss issues regarding building a data warehouse and data modeling",
         "September 24, 2023 21:20 UTC"
+    ],
+    "Transform coordinates from SK_42 to WGS84 and help us load it to GIS - QGIS/ArcGIS PRO - Upwork": [
+        "https://www.upwork.com/jobs/Transform-coordinates-from-SK_42-WGS84-and-help-load-GIS-QGIS-ArcGIS-PRO_%7E01fdd8b7c7e124a5a7?source=rss",
+        "We have a list of drillholes coordinates that we try to plot. They are from the Zhezqazgan area, Kazakhstan, but when loading to GIS, they appear somewhere in the Indian Ocean.\n\nAccording to the accompanying documents \"all calculations were carried out in the coordinate system of 1942, in a 3-degree zone, axial meridian 670301, height system \u2013 Baltic\", this makes me believe it is a Pulkovo 1942, zone 22 or 23 EPSG 2538 or 2539, with a Krassovsky 1940 ellipsoid, but whichever variant of Pulkovo I try, it's not working.\n\nAnother bit of information that might be relevant is \"The coordinates of exploration and production workings are calculated in the conventional coordinate system DZh-64, (\u0414\u0416-64) and elevations are calculated in the Caspian system.\" to which I could not find any relevant information.\n\nI am attaching a sample of 100 wells. We would need a solution that we could apply to multiple datasets, preferably for ArcGIS PRO, but QGIS will suffice as well.",
+        "September 26, 2023 07:42 UTC"
     ]
 }

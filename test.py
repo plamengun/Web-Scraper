@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright, JSHandle
 from common.models import Job_Application
 from typing import List
 from dotenv import load_dotenv
-from common.utils import create_job_application, _get_gpt_answers
+from common.utils import create_job_application, get_gpt_answers
 import os
 import re
 
@@ -51,7 +51,7 @@ def pw_job_post_application_page_scrape(application_page_url):
         job_application = create_job_application(description)
         job_application.question_texts = questions_texts_list
 
-        answers = _get_gpt_answers(job_application)
+        answers = get_gpt_answers(job_application)
 
         for i, element in enumerate((question_fields_list)):
             if i < len(answers):

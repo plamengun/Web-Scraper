@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright
-from common.utils import create_job_application, _get_gpt_answers
+from common.utils import create_job_application, get_gpt_answers
 from dotenv import load_dotenv
 import os
 import re
@@ -130,7 +130,7 @@ class UpworkScraper:
     
 
     def check_application_page_type(self):
-            by_milestone = self.page.locator("/fieldset[@id='milestoneMode']").is_visible()
+            by_milestone = self.page.get_by_text("How do you want to be paid?").is_visible()
             by_hour = self.page.get_by_text("What is the rate you'd like to bid for this job?").is_visible()
             by_project = self.page.get_by_text("What is the full amount you'd like to bid for this job?").is_visible()
             if by_milestone:
@@ -139,6 +139,7 @@ class UpworkScraper:
                 self.page.get_by_text('1 to 3 months').click()
                 return 'milestone'
             if by_hour:
+                #TODO Check if this option is on page. If not apply.Example of job: https://www.upwork.com/ab/proposals/job/~0151606201566a3c9f/apply/
                 self.page.get_by_text('Select a duration').click()
                 self.page.get_by_text('1 to 3 months').click()
                 return 'hour'
@@ -151,6 +152,9 @@ class UpworkScraper:
 
 
     def job_posting_apply(self):
+        #TODO make in try except block
+        #TODO check success page after submission
+
         self.check_application_page_url(self.page.url)
         questions_texts_list = []
         question_fields_list = []
@@ -168,13 +172,17 @@ class UpworkScraper:
         job_application = create_job_application(description)
         job_application.question_texts = questions_texts_list
 
-        answers = _get_gpt_answers(job_application)
+        answers = get_gpt_answers(job_application)
 
         for i, element in enumerate((question_fields_list)):
             if i < len(answers):
                 element.fill(answers[i])
 
-        print(self.check_application_page_type())
+        self.check_application_page_type()
+        
+        send_button = self.page.locator(f"//footer[@class='pb-10 mt-20']/div/button[@class='up-btn up-btn-primary m-0']")
+        send_button.click()
+        self.page.wait_for_load_state("load")
 
         return 'Job Application Successful'
 

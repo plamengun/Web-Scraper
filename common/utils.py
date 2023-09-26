@@ -1,7 +1,7 @@
 import json
 import re
 from common.models import Job_Posting, Job_Application
-from gpt_requests import askgpt
+from gpt_requests_service import askgpt
 
 
 PATH = 'common/storage.py'
@@ -49,7 +49,7 @@ def create_job_application(job_posting_description: str) -> Job_Application:
     return job_application
 
 
-def _get_gpt_answers(job_application: Job_Application) -> list[str]:
+def get_gpt_answers(job_application: Job_Application) -> list[str]:
     
     job_application.add_description_to_questions()
     chat_log = askgpt(job_application.question_texts)

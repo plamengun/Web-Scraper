@@ -69,14 +69,10 @@ class Job_Posting():
 class Job_Application():
     def __init__(self,
                  job_posting_description: str,
-                #  cover_letter_field: JSHandle,
-                #  question_fields: list[JSHandle] | None = None,
                  question_texts: list[str] | None = None,
                  answer_texts: list[str] | None = None,
                  chat_log: list[str] | None = None) -> None:
         self.job_posting_description = job_posting_description
-        # self.cover_letter_field = cover_letter_field
-        # self.question_fields = question_fields
         self.question_texts= question_texts
         self._answer_texts = answer_texts
         self.chat_log = chat_log
