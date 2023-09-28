@@ -8,14 +8,12 @@ openai.organization = os.environ.get('OPENAI_ORG')
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 completion = openai.ChatCompletion()
 
-JOB_PROPERTIES=os.environ.get('TEST_JOB_PROPERTIES')
-ROLE_CONTENT=os.environ.get('ROLE_QUALIFY_PROMPT')
 
-def askgpt(questions, chat_log=None):
+def askgpt(role, questions, chat_log=None):
     if chat_log is None:
         chat_log = [{
             'role': 'system',
-            'content': ROLE_CONTENT
+            'content': role
         }]
     
     if not questions:
@@ -34,15 +32,15 @@ def askgpt(questions, chat_log=None):
     chat_log.append({'role': 'assistant', 'content': answer})
     
     # Recursively call askgpt with the remaining questions
-    return askgpt(questions[1:], chat_log)
+    return askgpt(role, questions[1:], chat_log)
 
 
-# questions = [PROMPT, "What are some tips for writing an effective proposal?", "How can I stand out to clients on Upwork?"]
-questions = [JOB_PROPERTIES]
-log = askgpt(questions)
-# print(log)
+# # questions = [PROMPT, "What are some tips for writing an effective proposal?", "How can I stand out to clients on Upwork?"]
+# questions = [JOB_PROPERTIES]
+# log = askgpt(ROLE_CONTENT, questions)
+# # print(log)
+# # for entry in log:
+# #     print(entry)
 # for entry in log:
-#     print(entry)
-for entry in log:
-    if entry['role'] == 'assistant':
-        print(entry['content'])
+#     if entry['role'] == 'assistant':
+#         print(entry['content'])

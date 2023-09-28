@@ -8,7 +8,8 @@ class Job_Posting():
                  connects_required: int | None,
                  connects_available: int | None,
                  client_country: str | None,
-                 application_page_url: str | None) -> None:
+                 application_page_url: str | None,
+                 eligible_to_apply: bool | None=None) -> None:
         self._title = title
         self._url = url
         self._posted_before = posted_before
@@ -17,6 +18,7 @@ class Job_Posting():
         self.connects_available = connects_available
         self._client_country = client_country
         self._application_page_url = application_page_url
+        self.eligible_to_apply = eligible_to_apply
 
     @property
     def title(self):

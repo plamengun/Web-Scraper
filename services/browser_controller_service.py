@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright
-from common.utils import create_job_application, get_gpt_answers
+from common.utils import create_job_application, get_gpt_answers_apply
 from dotenv import load_dotenv
 import os
 import re
@@ -172,7 +172,7 @@ class UpworkScraper:
         job_application = create_job_application(description)
         job_application.question_texts = questions_texts_list
 
-        answers = get_gpt_answers(job_application)
+        answers = get_gpt_answers_apply(job_application)
 
         for i, element in enumerate((question_fields_list)):
             #TODO test this strip() method
@@ -185,6 +185,13 @@ class UpworkScraper:
         send_button = self.page.locator(f"//footer[@class='pb-10 mt-20']/div/button[@class='up-btn up-btn-primary m-0']")
         send_button.click()
         self.page.wait_for_load_state("load")
+
+        #ToDo Final Popup Menu
+        popup = self.page.locator(f"//div[@class='up-modal-content up-modal-headerless up-modal-desktop-container']")
+        accept_terms_button = self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
+        accept_terms_button.click()
+        apply_button = self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
+        apply_button.click()
 
         return 'Job Application Successful'
 

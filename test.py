@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
+from common.variables import APPLY_PROMPT
 import os
 
 
@@ -57,8 +58,12 @@ def scrape_client_info(job_posting_details_url: str):
 
 
         
-JOB_PROPERTIES = """Job post has the following properties:\nAbout the client\nPayment method verified\nRating is 4.581980441 out of 5.\n4.58 of 67 reviews\nUnited Arab Emirates\nDubai 5:55 pm\n135 jobs posted\n73% hire rate, 1 open 
-job\n$93K total spent\n133 hires, 27 active\n$9.75 /hr avg hourly rate paid\n2,666 hours\nSales & Marketing\nMid-sized company (10-99 people)\nMember since Feb 21, 2019"""
+
+TEST_JOB_PROPERTIES="""
+Job post has the following properties:\nAbout the client\nPayment method verified\nRating is 4.581980441 out of 5.\n4.58 of 67 reviews\nUnited Arab Emirates\nDubai 5:55 pm\n135 jobs posted\n73% hire rate, 1 open 
+job\n$93K total spent\n133 hires, 27 active\n$9.75 /hr avg hourly rate paid\n2,666 hours\nSales & Marketing\nMid-sized company (10-99 people)\nMember since Feb 21, 2019
+"""
 
 
-print(JOB_PROPERTIES)
+print(TEST_JOB_PROPERTIES)
+print(APPLY_PROMPT)

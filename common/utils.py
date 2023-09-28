@@ -1,7 +1,8 @@
 import json
 import re
 import datetime
-from common.models import Job_Posting, Job_Application
+from common.models import Job_Posting, Job_Application, Job_Posting_Qualifier
+from common.variables import *
 from services.gpt_requests_service import askgpt
 
 
@@ -55,11 +56,17 @@ def create_job_application(job_posting_description: str) -> Job_Application:
     return job_application
 
 
-def get_gpt_answers(job_application: Job_Application) -> list[str]:
-    
+def create_job_posting_qualifier() -> Job_Posting_Qualifier:
+    pass
+
+
+def get_gpt_answers_apply(job_application: Job_Application) -> list[str]:
     job_application.add_description_to_questions()
-    chat_log = askgpt(job_application.question_texts)
+    chat_log = askgpt(ROLE_APPLY_PROMPT, job_application.question_texts)
     job_application.chat_log = chat_log
     answers = job_application.answer_texts
-
     return answers
+
+
+def get_gpt_answers_qualify(job_posting_qualifier: Job_Posting_Qualifier):
+    pass
