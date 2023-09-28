@@ -99,25 +99,25 @@ class Job_Application():
         return answer_texts 
 
 
+class Job_Posting_Qualifier(Job_Posting):
+    def __init__(self,
+                 title: str | None, 
+                 url: str | None, 
+                 posted_before: str | None,
+                 description: str | None, 
+                 connects_required: int | None, 
+                 client_properties: str | None):
+        super().__init__(title, url, posted_before, description, connects_required, None, None, None)
+        self._client_properties = client_properties
 
-# class Job_Posting_Record(Job_Posting):
-#     def __init__(self, 
-#                  job_link, 
-#                  date_submitted, 
-#                  time_job_posted_ago, 
-#                  job_total_proposals, 
-#                  sent_status,
-#                  connects_spent, 
-#                  boosted,
-#                  boosted_place,
-#                  uk_only) -> None:
-#         self.job_link = job_link
-#         self.date_submitted = date_submitted
-#         self.time_job_posted_ago = time_job_posted_ago
-#         self.job_total_proposals = job_total_proposals
-#         self.sent_status = sent_status
-#         self.connects_spent = connects_spent
-#         self.boosted = boosted
-#         self.boosted_place = boosted_place
-#         self.uk_only = uk_only
+    @property
+    def client_properties(self):
+        return self._client_properties
 
+    def convert_to_str(self):
+        job_post_qualifier_str += f"{self.client_properties}\n"
+        job_post_qualifier_str = f"Title: {self.title}\n"
+        job_post_qualifier_str += f"Posted Before: {self.posted_before}\n"
+        job_post_qualifier_str += f"Description: {self.description}\n"
+        job_post_qualifier_str += f"Connects Required: {self.connects_required}\n"
+        return job_post_qualifier_str

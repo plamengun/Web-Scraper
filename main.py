@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from browser_controller_service import UpworkScraper
+from services.browser_controller_service import UpworkScraper
 from common.utils import load_storage, save_storage, extract_data_from_xml, create_job_posting
 
 

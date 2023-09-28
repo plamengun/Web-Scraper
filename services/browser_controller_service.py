@@ -175,8 +175,10 @@ class UpworkScraper:
         answers = get_gpt_answers(job_application)
 
         for i, element in enumerate((question_fields_list)):
+            #TODO test this strip() method
             if i < len(answers):
-                element.fill(answers[i])
+                answer = answers[i].strip()
+                element.fill(answer)
 
         self.check_application_page_type()
         

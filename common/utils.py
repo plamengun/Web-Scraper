@@ -1,11 +1,17 @@
 import json
 import re
+import datetime
 from common.models import Job_Posting, Job_Application
-from gpt_requests_service import askgpt
+from services.gpt_requests_service import askgpt
 
 
 PATH = 'common/storage.py'
 POSTED_ON_PATTERN = r'<b>Posted On<\/b>: (.*?)<br \/>'
+
+
+def get_current_datetime_as_string():
+    current_datetime = datetime.datetime.now()
+    return current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def load_storage():

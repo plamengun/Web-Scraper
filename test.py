@@ -1,15 +1,9 @@
-from playwright.sync_api import sync_playwright, JSHandle
-from common.models import Job_Application
-from typing import List
+from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
-from common.utils import create_job_application, get_gpt_answers
 import os
-import re
+
 
 load_dotenv()
-
-# def pw_job_posting():
-# print(pw_job_posting_scrape())
 
 
 def calculate_connects(connects_required: int = 12, available_connects: int = 1) -> str | None:
@@ -18,11 +12,10 @@ def calculate_connects(connects_required: int = 12, available_connects: int = 1)
 
 
 
+application_page_url = 'https://www.upwork.com/jobs/Create-huggingface-dataset_~01d264e91c09c5a3f4/?referrer_url_path=find_work_home'
+application_page_url1 = 'https://www.upwork.com/jobs/Cold-Message-Chat-Sales-Representative_~01568e95d9171986cd/?referrer_url_path=find_work_home'
 
-job_post = 'https://www.upwork.com/ab/proposals/job/~01348565d6d5978545/apply/'
-
-    
-def pw_job_post_application_page_scrape(application_page_url):
+def scrape_client_info(job_posting_details_url: str):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=50)
         context = browser.new_context()
@@ -33,54 +26,39 @@ def pw_job_post_application_page_scrape(application_page_url):
         page.fill('input#login_password', os.environ.get('UW_PASSWORD'))
         page.click('button#login_control_continue')
         page.wait_for_event("load")
-        page.goto(application_page_url)
+        page.goto(job_posting_details_url)
 
-        questions_texts_list = []
-        question_fields_list = []
-        cover_letter_field = page.query_selector('//div[@class="cover-letter-area"]//textarea')
-        description = page.query_selector(f"//div[@class='description']").text_content()
-
-        if page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
-            questions_elements = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//label[@class="up-label"]')
-            for element in questions_elements:
-                text_content = element.text_content().strip()
-                questions_texts_list.append(text_content)
-            question_fields_list = page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
-            question_fields_list.insert(0, cover_letter_field)
-
-        job_application = create_job_application(description)
-        job_application.question_texts = questions_texts_list
-
-        answers = get_gpt_answers(job_application)
-
-        for i, element in enumerate((question_fields_list)):
-            if i < len(answers):
-                element.fill(answers[i])
+        client_info_container = page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']").all_inner_texts()
+        items = client_info_container[0].split("\n")
+        items_clean = [item.strip() for item in items]
+        items_st = "\n".join(items_clean)
+        items_final = f'''Job post has the following properties:\n{items_st}'''
         
-        return questions_texts_list
-    
+        return [items_final]
 
-print(pw_job_post_application_page_scrape(job_post))
-
+# print(scrape_client_info(application_page_url1))
 
 
 
+        # payment_verified = page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']//div[@class='mb-10']")
+        # print(payment_verified.all_inner_texts())
+        # reviews = page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']//div[@class='text-muted rating mb-20']")
+        # print(reviews.all_inner_texts())
+        # all_info = page.query_selector_all(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']//ul[@data-test='about-client-visitor']//li")
+        # print(all_info)
+
+        # jobs_posted = ''
+        # total_spend = ''
+        # avrg_hourly_rate = ''
+        # member_since = ''
+        # applications = ''
 
 
 
 
-def pw_job_post_apply(application_page_url):
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=50)
-        context = browser.new_context()
-        # context.add_cookies(session_data)
-        page = context.new_page()
-
-        page.goto(application_page_url)
-        page.wait_for_event("load")
-        # page.get_by_text("By project").click()
-        # page.get_by_text('Select a duration').click()
-        # page.get_by_text('1 to 3 months').click()
-        # page.wait_for_event("load")
-        # print('Success')
         
+JOB_PROPERTIES = """Job post has the following properties:\nAbout the client\nPayment method verified\nRating is 4.581980441 out of 5.\n4.58 of 67 reviews\nUnited Arab Emirates\nDubai 5:55 pm\n135 jobs posted\n73% hire rate, 1 open 
+job\n$93K total spent\n133 hires, 27 active\n$9.75 /hr avg hourly rate paid\n2,666 hours\nSales & Marketing\nMid-sized company (10-99 people)\nMember since Feb 21, 2019"""
+
+
+print(JOB_PROPERTIES)
