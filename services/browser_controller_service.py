@@ -127,6 +127,14 @@ class UpworkScraper:
         self.page.wait_for_event("load")
         application_page_url = self.page.url
         return application_page_url
+
+    def scrape_client_info(self) -> str:
+        client_info_container = self.page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']").all_inner_texts()
+        items = client_info_container[0].split("\n")
+        items_clean = [item.strip() for item in items]
+        items_str = "\n".join(items_clean)
+        items_final = f'''Job post has the following properties:\n{items_str}'''
+        return items_final
     
 
     def check_application_page_type(self):
@@ -159,6 +167,7 @@ class UpworkScraper:
         questions_texts_list = []
         question_fields_list = []
         cover_letter_field = self.page.query_selector('//div[@class="cover-letter-area"]//textarea')
+        #TODO AttributeError: 'NoneType' object has no attribute 'text_content' -> if this then take description from Job object
         description = self.page.query_selector(f"//div[@class='description']").text_content()
 
         if self.page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
@@ -175,7 +184,6 @@ class UpworkScraper:
         answers = get_gpt_answers_apply(job_application)
 
         for i, element in enumerate((question_fields_list)):
-            #TODO test this strip() method
             if i < len(answers):
                 answer = answers[i].strip()
                 element.fill(answer)

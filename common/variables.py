@@ -141,8 +141,8 @@ You are trying to apply to the most relevant ones that have a high chance of bei
 Based on factors like location, client rating, job description, etc. you need to decide weather it's worth applying to a job post or not.
 
 Answer just in YES or NO and give a very brief explanation of why you decided that.
-Format your answer like so:
-Answer: YES or NO
+Format your answer exactly like so:
+Answer: YES or NO,
 Explanation: Brief explanation why you made this descision based on the job post properties provided and the rules
 
 RULES:
@@ -159,8 +159,8 @@ Below 4 - Do not apply!
 
 TOTAL SPENT:
 Excellent: $10k and above
-Good: $1k-10k
-Bad: 0 or no info
+Good: $1000-10000
+Bad: no info, below $1000
 
 POSTED BEFORE:
 Excellent: 2h and below
@@ -168,19 +168,19 @@ Good: 1h-24h
 Bad: 1 day and above
 
 COUNTRY:
-Excellent: (United States, United Kingdom, Canada, Australia, New Zealand, Netherlands, Denmark, Sweden)
+Excellent: (United States, United Kingdom, Canada, Australia, New Zealand, Netherlands, Denmark, Sweden, Finland)
 Good: (Germany, Czech Republic, Hungary, Philipines, United Arab Emirates, Israel)
-Bad: (India, Pakistan, China, Nigeria, Indonesia)
+Bad: (India, Pakistan, China, Nigeria, Bangladesh, Egypt, Indonesia)
 
 CONNECTS REQUIRED:
-Excellent: <=6
-Good: >=6 <=10
-Bad: >10
+Excellent: less or equal to 6
+Good: between 6 and 10
+Bad: more than 10
 
-APPLICATIONS:
-Excellent: 0-5
-Good: 5-30
-Bad: 30-50+
+PROPOSALS:
+Excellent: between 0 and 5
+Good: between 5 and 30
+Bad: more than 30
 
 PAYMENT VERIFIED:
 Excellent: Yes

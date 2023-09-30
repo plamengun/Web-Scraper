@@ -1,6 +1,5 @@
 import json
 import re
-import datetime
 from common.models import Job_Posting, Job_Application, Job_Posting_Qualifier
 from common.variables import *
 from services.gpt_requests_service import askgpt
@@ -8,11 +7,6 @@ from services.gpt_requests_service import askgpt
 
 PATH = 'common/storage.py'
 POSTED_ON_PATTERN = r'<b>Posted On<\/b>: (.*?)<br \/>'
-
-
-def get_current_datetime_as_string():
-    current_datetime = datetime.datetime.now()
-    return current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def load_storage():
@@ -47,7 +41,14 @@ def create_job_posting(title: str, url: str, job_post_data: tuple) -> Job_Postin
     title = title
     url = url
     posted_before, description, connects_required, connects_available, client_country, application_page_url = job_post_data
-    job_posting = Job_Posting(title, url, posted_before, description, connects_required, connects_available, client_country, application_page_url)
+    job_posting = Job_Posting(title, 
+                              url, 
+                              posted_before, 
+                              description, 
+                              connects_required, 
+                              connects_available, 
+                              client_country, 
+                              application_page_url)
     return job_posting
 
 
@@ -56,8 +57,14 @@ def create_job_application(job_posting_description: str) -> Job_Application:
     return job_application
 
 
-def create_job_posting_qualifier() -> Job_Posting_Qualifier:
-    pass
+def create_job_posting_qualifier(job_posting: Job_Posting, client_info_data: list[str]) -> Job_Posting_Qualifier:
+    job_posting_qualifier = Job_Posting_Qualifier(job_posting.title, 
+                                                  job_posting.url, 
+                                                  job_posting.posted_before, 
+                                                  job_posting.description, 
+                                                  job_posting.connects_required,
+                                                  client_info_data)
+    return job_posting_qualifier
 
 
 def get_gpt_answers_apply(job_application: Job_Application) -> list[str]:
@@ -69,4 +76,6 @@ def get_gpt_answers_apply(job_application: Job_Application) -> list[str]:
 
 
 def get_gpt_answers_qualify(job_posting_qualifier: Job_Posting_Qualifier):
-    pass
+    client_properties_list = [job_posting_qualifier.convert_to_str()]
+    chat_log = askgpt(ROLE_QUALIFY_PROMPT, client_properties_list)
+    return chat_log

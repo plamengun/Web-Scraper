@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from services.browser_controller_service import UpworkScraper
-from common.utils import load_storage, save_storage, extract_data_from_xml, create_job_posting
+from common.utils import load_storage, save_storage, extract_data_from_xml, create_job_posting, create_job_posting_qualifier, get_gpt_answers_qualify
 
 
 
@@ -23,9 +23,20 @@ def driver(pages: list[str]):
                 url = job_post.link.text
                 scraper.check_job_page_url(url)
                 #TODO CHECK IF JOB POSTING PAGE WILL OPEN OR JOB NOT AVAILABLE
+                client_info_data = scraper.scrape_client_info()
                 job_post_data = scraper.job_posting_scrape()
                 #Create JobPosting object
                 job_posting = create_job_posting(title, url, job_post_data)
+                job_posting_qualifier = create_job_posting_qualifier(job_posting, client_info_data)
+                #qualify job posting
+                qualify_gpt_answers = get_gpt_answers_qualify(job_posting_qualifier)
+                job_posting_qualifier.gpt_response = qualify_gpt_answers
+                job_posting_qualifier_asnwer = job_posting_qualifier.parse_gpt_response()
+                job_posting_qualifier.gpt_answer = job_posting_qualifier_asnwer
+                print(job_posting_qualifier.check_gpt_answer())
+                print(job_posting_qualifier.convert_to_json())
+                
+                
                 #Extract data from job posting application page
                 scraper.check_application_page_url(job_posting.application_page_url)
                 print(scraper.job_posting_apply())
