@@ -1,55 +1,19 @@
 import datetime
+from pydantic import BaseModel
 
-class Job_Posting():
-    def __init__(self, 
-                 title: str | None, 
-                 url: str | None, 
-                 posted_before: str | None, 
-                 description: str | None,
-                 connects_required: int | None,
-                 connects_available: int | None,
-                 client_country: str | None,
-                 application_page_url: str | None,
-                 eligible_to_apply: bool | None=None) -> None:
-        self._title = title
-        self._url = url
-        self._posted_before = posted_before
-        self._description = description
-        self._connects_required = connects_required
-        self.connects_available = connects_available
-        self._client_country = client_country
-        self._application_page_url = application_page_url
-        self.eligible_to_apply = eligible_to_apply
 
-    @property
-    def title(self):
-        return self._title
+class Job_Posting(BaseModel):
+     
+    title: str
+    url: str
+    posted_before: str
+    description: str
+    connects_required: int
+    connects_available: int
+    client_country: str
+    application_page_url: str
     
-    @property
-    def url(self):
-        return self._url
-    
-    @property
-    def posted_before(self):
-        return self._posted_before
-    
-    @property
-    def description(self):
-        return self._description
-    
-    @property
-    def connects_required(self):
-        return self._connects_required
-    
-    @property
-    def client_country(self):
-        return self._client_country
-    
-    @property
-    def application_page_url(self):
-        return self._application_page_url
-    
-    def check_available_connects(self) -> str | None:
+    def check_available_connects(self) -> bool:
         if self.connects_available - self.connects_required >= 0:
             return True
         return False
@@ -68,8 +32,86 @@ class Job_Posting():
         }
         return job_post_json
 
+# class Job_Posting():
+#     def __init__(self, 
+#                  title: str, 
+#                  url: str, 
+#                  posted_before: str, 
+#                  description: str,
+#                  connects_required: int,
+#                  connects_available: int,
+#                  client_country: str,
+#                  application_page_url: str) -> None:
+#         self._title = title
+#         self._url = url
+#         self._posted_before = posted_before
+#         self._description = description
+#         self._connects_required = connects_required
+#         self._connects_available = connects_available
+#         self._client_country = client_country
+#         self._application_page_url = application_page_url
 
-class Job_Application():
+#     @property
+#     def title(self):
+#         return self._title
+    
+#     @property
+#     def url(self):
+#         return self._url
+    
+#     @property
+#     def posted_before(self):
+#         return self._posted_before
+    
+#     @property
+#     def description(self):
+#         return self._description
+    
+#     @property
+#     def connects_required(self):
+#         return self._connects_required
+    
+#     @property
+#     def client_country(self):
+#         return self._client_country
+    
+#     @property
+#     def connects_available(self):
+#         return self._connects_available
+    
+#     @connects_available.setter
+#     def connects_available(self, value):
+#         self._connects_available = value
+    
+#     @client_country.setter
+#     def client_country(self, value):
+#         self._client_country = value
+    
+#     @property
+#     def application_page_url(self):
+#         return self._application_page_url
+    
+#     def check_available_connects(self) -> bool:
+#         if self.connects_available - self.connects_required >= 0:
+#             return True
+#         return False
+
+#     def convert_to_json(self):
+#         job_post_json = {
+#             "fields": {
+#                 "title": self.title,
+#                 "url": self.url,
+#                 "posted_before": self.posted_before,
+#                 "description": self.description,
+#                 "connects_required": self.connects_required,
+#                 "connects_available": self.connects_available,
+#                 "client_country": self.client_country,
+#             }
+#         }
+#         return job_post_json
+
+
+class Job_Application(BaseModel):
     def __init__(self,
                  job_posting_description: str,
                  question_texts: list[str] | None = None,
@@ -109,13 +151,27 @@ class Job_Posting_Qualifier(Job_Posting):
                  posted_before: str | None,
                  description: str | None, 
                  connects_required: int | None, 
+                 connects_available: int | None,
+                 client_country: str | None,
                  client_properties: str | None,
                  gpt_response: str | None=None,
-                 gpt_answer: str | None= None):
-        super().__init__(title, url, posted_before, description, connects_required, None, None, None)
+                 gpt_answer: str | None= None,
+                 status: str | None='Not Applied'):
+        super().__init__(title, url, posted_before, description, connects_required, connects_available, client_country, None)
         self._client_properties = client_properties
         self.gpt_response = gpt_response
         self.gpt_answer = gpt_answer
+        self._status = status
+    
+    @property
+    def status(self):
+        return self._status
+    
+    @status.setter
+    def status(self, value):
+        if value != 'Applied':
+            raise ValueError('Invalid job_posting status value')
+        self._status = value
 
     @property
     def client_properties(self):
@@ -171,9 +227,7 @@ class Job_Posting_Qualifier(Job_Posting):
         job_post_json = {
             "fields": {
                 "time_of_application_attempt": self._get_current_datetime_as_string(),
-                 #TODO Implement status change
-                "result_of_application_attempt": 'Applied/Not Applied',
-
+                "result_of_application_attempt": self.status,
                 "title": self.title,
                 "url": self.url,
                 "posted_before": self.posted_before,
@@ -181,7 +235,6 @@ class Job_Posting_Qualifier(Job_Posting):
                 "connects_required": self.connects_required,
                 "connects_available": self.connects_available,
                 "client_country": self.client_country,
-
                 "gpt_qualifying_answer": self.gpt_answer
             }
         }

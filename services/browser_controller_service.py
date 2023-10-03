@@ -56,6 +56,7 @@ class UpworkScraper:
     def rss_feed_scrape(self):
         n = 0
         rss_feeds = []
+        #TODO refactor to click on expand page instead of looping
         while n < 1:
             rss_feed_dropdown = self.page.locator(f"//div[@id='rss-atom-links']")
             rss_feed_dropdown.click()
@@ -130,10 +131,15 @@ class UpworkScraper:
 
     def scrape_client_info(self) -> str:
         client_info_container = self.page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']").all_inner_texts()
+        client_info_proposals = self.page.locator(f"//div[@class='col-lg-6']//ul[@class='list-unstyled']").all_inner_texts()
+        proposal_items = client_info_proposals[0].split("\n")
+        #TODO potentially pass all proposal items
+        proposal_items_clean = [item.strip() for item in proposal_items]
+        proposal_str = proposal_items_clean[0] + proposal_items_clean[1]
         items = client_info_container[0].split("\n")
         items_clean = [item.strip() for item in items]
         items_str = "\n".join(items_clean)
-        items_final = f'''Job post has the following properties:\n{items_str}'''
+        items_final = f'''Job post has the following properties:\n{items_str} + \n{proposal_str}'''
         return items_final
     
 
@@ -196,10 +202,11 @@ class UpworkScraper:
 
         #ToDo Final Popup Menu
         popup = self.page.locator(f"//div[@class='up-modal-content up-modal-headerless up-modal-desktop-container']")
-        accept_terms_button = self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
-        accept_terms_button.click()
-        apply_button = self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
-        apply_button.click()
+        if popup:
+            accept_terms_button = self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
+            accept_terms_button.click()
+            apply_button = self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
+            apply_button.click()
 
-        return 'Job Application Successful'
+            return 'Job Application Successful'
 

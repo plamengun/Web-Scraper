@@ -38,17 +38,15 @@ def extract_data_from_xml(job_post: Job_Posting):
 
 
 def create_job_posting(title: str, url: str, job_post_data: tuple) -> Job_Posting:
-    title = title
-    url = url
     posted_before, description, connects_required, connects_available, client_country, application_page_url = job_post_data
-    job_posting = Job_Posting(title, 
-                              url, 
-                              posted_before, 
-                              description, 
-                              connects_required, 
-                              connects_available, 
-                              client_country, 
-                              application_page_url)
+    job_posting = Job_Posting(title=title, 
+                              url=url, 
+                              posted_before=posted_before, 
+                              description=description, 
+                              connects_required=connects_required, 
+                              connects_available=connects_available, 
+                              client_country=client_country, 
+                              application_page_url=application_page_url)
     return job_posting
 
 
@@ -63,6 +61,8 @@ def create_job_posting_qualifier(job_posting: Job_Posting, client_info_data: lis
                                                   job_posting.posted_before, 
                                                   job_posting.description, 
                                                   job_posting.connects_required,
+                                                  job_posting.connects_available,
+                                                  job_posting.client_country,
                                                   client_info_data)
     return job_posting_qualifier
 

@@ -158,9 +158,9 @@ RATING:
 Below 4 - Do not apply!
 
 TOTAL SPENT:
-Excellent: $10k and above
-Good: $1000-10000
-Bad: no info, below $1000
+Excellent: $10000 and above
+Good: between $8000 and 10000
+Bad: no info, below $800
 
 POSTED BEFORE:
 Excellent: 2h and below
@@ -178,7 +178,7 @@ Good: between 6 and 10
 Bad: more than 10
 
 PROPOSALS:
-Excellent: between 0 and 5
+Excellent: less or equal to 5
 Good: between 5 and 30
 Bad: more than 30
 
