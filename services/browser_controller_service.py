@@ -115,12 +115,12 @@ class UpworkScraper:
     def job_posting_scrape(self):
         description = self._check_if_text_element_exists(self.page.query_selector(f'//div[@data-test="description"]/div'))
         connects_required = self._check_if_numeric_element_exists(self.page.query_selector(f'//div[@data-test="connects-auction"]/div'))
-        available_connects = self._check_if_numeric_element_exists(self.page.query_selector(f'//div[@data-test="connects-auction"]/div[@class="mt-10"]'))
+        connects_available = self._check_if_numeric_element_exists(self.page.query_selector(f'//div[@data-test="connects-auction"]/div[@class="mt-10"]'))
         posted_before_text = self._check_if_text_element_exists(self.page.query_selector(f'//div[@id="posted-on"]//span[@class]/span'))
         client_country_text = self._check_if_text_element_exists(self.page.query_selector(f'//ul[@class="list-unstyled cfe-ui-job-about-client-visitor m-0-bottom"]/li[@data-qa="client-location"]/strong'))
         apply_now_locator_str = self._check_if_object_element_exists(f'//button[@aria-label="Apply Now"]')
         application_page_url = self._go_to_application_page(apply_now_locator_str)
-        return posted_before_text, description, connects_required, available_connects, client_country_text, application_page_url
+        return posted_before_text, description, connects_required, connects_available, client_country_text, application_page_url
 
     
     def _go_to_application_page(self, button_locator_str: str):

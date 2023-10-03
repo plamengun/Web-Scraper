@@ -55,15 +55,16 @@ def create_job_application(job_posting_description: str) -> Job_Application:
     return job_application
 
 
-def create_job_posting_qualifier(job_posting: Job_Posting, client_info_data: list[str]) -> Job_Posting_Qualifier:
-    job_posting_qualifier = Job_Posting_Qualifier(job_posting.title, 
-                                                  job_posting.url, 
-                                                  job_posting.posted_before, 
-                                                  job_posting.description, 
-                                                  job_posting.connects_required,
-                                                  job_posting.connects_available,
-                                                  job_posting.client_country,
-                                                  client_info_data)
+def create_job_posting_qualifier(job_posting: Job_Posting, client_info_data: str) -> Job_Posting_Qualifier:
+    job_posting_qualifier = Job_Posting_Qualifier(title=job_posting.title, 
+                                                  url=job_posting.url, 
+                                                  posted_before=job_posting.posted_before, 
+                                                  description=job_posting.description, 
+                                                  connects_required=job_posting.connects_required,
+                                                  connects_available=job_posting.connects_available,
+                                                  client_country=job_posting.client_country,
+                                                  application_page_url=job_posting.application_page_url,
+                                                  client_properties=client_info_data)
     return job_posting_qualifier
 
 

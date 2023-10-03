@@ -525,5 +525,10 @@
         "https://www.upwork.com/jobs/Transform-coordinates-from-SK_42-WGS84-and-help-load-GIS-QGIS-ArcGIS-PRO_%7E01fdd8b7c7e124a5a7?source=rss",
         "We have a list of drillholes coordinates that we try to plot. They are from the Zhezqazgan area, Kazakhstan, but when loading to GIS, they appear somewhere in the Indian Ocean.\n\nAccording to the accompanying documents \"all calculations were carried out in the coordinate system of 1942, in a 3-degree zone, axial meridian 670301, height system \u2013 Baltic\", this makes me believe it is a Pulkovo 1942, zone 22 or 23 EPSG 2538 or 2539, with a Krassovsky 1940 ellipsoid, but whichever variant of Pulkovo I try, it's not working.\n\nAnother bit of information that might be relevant is \"The coordinates of exploration and production workings are calculated in the conventional coordinate system DZh-64, (\u0414\u0416-64) and elevations are calculated in the Caspian system.\" to which I could not find any relevant information.\n\nI am attaching a sample of 100 wells. We would need a solution that we could apply to multiple datasets, preferably for ArcGIS PRO, but QGIS will suffice as well.",
         "September 26, 2023 07:42 UTC"
+    ],
+    "Need help in Deep Learning Assignment - Upwork": [
+        "https://www.upwork.com/jobs/Need-help-Deep-Learning-Assignment_%7E012924065af18fd3b6?source=rss",
+        "Hello There,\n\nI need your help in completing my Deep learning assessment.\nI am sharing all the details below. PLease go through them and let me know.\nAs mentioned in the task, I need 2 python files and a report.\n\nThe assignment can be found here: https://www.cse.unsw.edu.au/~cs9444/23T3/hw1/index.html\nDownlaod the zip file (project file)\n\nI need it delivered in 3-4 days.\nLet me know the quoatation?\nQuality matters more, I need to score 18/20 that is the only expectation I have from your end.\n\nLet me know if this is possible.\n\nThanks and regards,\nJai",
+        "October 03, 2023 07:15 UTC"
     ]
 }

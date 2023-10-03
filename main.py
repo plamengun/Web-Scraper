@@ -36,6 +36,7 @@ def driver(pages: list[str]):
                 job_posting_qualifier.gpt_answer = job_posting_qualifier_asnwer
                 job_posting_qualifier_answer = job_posting_qualifier.check_gpt_answer()
                 print(job_posting_qualifier_answer)
+                #TODO omit this convert_to_json at this step. for testing only
                 print(job_posting_qualifier.convert_to_json())
                 #apply to job posting
                 if job_posting.check_available_connects() and job_posting_qualifier_answer:
