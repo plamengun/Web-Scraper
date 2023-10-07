@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 from common.utils import create_job_application, get_gpt_answers_apply
 from dotenv import load_dotenv
+from typing import List
 import os
 import re
 
@@ -79,7 +80,7 @@ class UpworkScraper:
             button.click()
         return new_page_info
     
-    def check_application_page_url(self, application_page_url: str):
+    def check_application_page_url(self, application_page_url: str) -> bool:
         if self.page.url != application_page_url:
             page = self.context.new_page()
             page.goto(application_page_url)
@@ -87,7 +88,7 @@ class UpworkScraper:
             return False
         return True
     
-    def check_job_page_url(self, job_url):
+    def check_job_page_url(self, job_url: str) -> bool:
         if self.page != job_url:
             page = self.context.new_page()
             page.goto(job_url)
@@ -100,7 +101,12 @@ class UpworkScraper:
             return element.inner_text()
         return 'None'
     
-    def _check_if_object_element_exists(self, locator_str):
+    def _check_if_text_elements_exist(self, elements) -> List[str]:
+        if elements:
+            return elements.all_inner_texts()
+        return 'None'
+    
+    def _check_if_object_element_exists(self, locator_str: str) -> str:
         button = self.page.locator(locator_str)
         if button:
             return locator_str
@@ -130,8 +136,8 @@ class UpworkScraper:
         return application_page_url
 
     def scrape_client_info(self) -> str:
-        client_info_container = self.page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']").all_inner_texts()
-        client_info_proposals = self.page.locator(f"//div[@class='col-lg-6']//ul[@class='list-unstyled']").all_inner_texts()
+        client_info_container = self._check_if_text_elements_exist(self.page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']"))
+        client_info_proposals = self._check_if_text_elements_exist(self.page.locator(f"//div[@data-test='client-activity']//ul[@class='list-unstyled']"))
         proposal_items = client_info_proposals[0].split("\n")
         #TODO potentially pass all proposal items
         proposal_items_clean = [item.strip() for item in proposal_items]
@@ -165,7 +171,7 @@ class UpworkScraper:
                 return None
 
 
-    def job_posting_apply(self):
+    def job_posting_apply(self) -> str:
         #TODO make in try except block
         #TODO check success page after submission
 
