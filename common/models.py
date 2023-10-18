@@ -3,77 +3,16 @@ from pydantic import BaseModel
 from typing import List
 
 
-class Job_Posting(BaseModel):
-     
-    title: str
-    url: str
-    posted_before: str
-    description: str
-    connects_required: int | str
-    connects_available: int | str
-    client_country: str
-    application_page_url: str
-    
-    def check_available_connects(self) -> bool:
-        if self.connects_available - self.connects_required >= 0:
-            return True
-        return False
-
-    def convert_to_json(self):
-        job_post_json = {
-            "fields": {
-                "title": self.title,
-                "url": self.url,
-                "posted_before": self.posted_before,
-                "description": self.description,
-                "connects_required": self.connects_required,
-                "connects_available": self.connects_available,
-                "client_country": self.client_country,
-            }
-        }
-        return job_post_json
-
-
-class Job_Application(BaseModel):
-
-    job_posting_description: str
-    question_texts: List[str] | None = None
-    _answer_texts: List[str] | None = None
-    chat_log: List[str] | None = None
-
-    def add_description_to_questions(self):
-        if self.question_texts is None:
-            self.question_texts = [self.job_posting_description] 
-        self.question_texts.insert(0, self.job_posting_description)
-
-    @property
-    def answer_texts(self):
-        if self._answer_texts is None:
-            self._answer_texts = self.extract_answers_from_log()
-        return self._answer_texts
-    
-    @answer_texts.setter
-    def answer_texts(self, value):
-        self._answer_texts = value
-
-    def extract_answers_from_log(self) -> List[str]:
-        if self.chat_log is None:
-            raise ValueError('No answers found')
-        answer_texts = [entry['content'] for entry in self.chat_log if entry['role'] == 'assistant']
-        return answer_texts 
-    
-
-class Job_Posting_Qualifier(Job_Posting):
-
-    title: str
-    url: str
-    posted_before: str
-    description: str
-    connects_required: int | str
-    connects_available: int | str
-    client_country: str
-    application_page_url: str
-    client_properties: str
+class Job_Posting_Qualifier(BaseModel):
+    title: str #
+    url: str #
+    posted_before: str #
+    description: str #
+    connects_required: int | str #
+    connects_available: int | str #
+    client_country: str #
+    application_page_url: str #
+    client_properties: str #
     gpt_response: str | None = None
     gpt_answer: str | None = None
     _status: str | None = 'Not Applied'
@@ -87,6 +26,11 @@ class Job_Posting_Qualifier(Job_Posting):
         if value != 'Applied':
             raise ValueError('Invalid job_posting status value')
         self._status = value
+
+    def check_available_connects(self) -> bool:
+        if self.connects_available - self.connects_required >= 0:
+            return True
+        return False
 
     def parse_gpt_response(self):
         if self.gpt_response is None:
@@ -144,3 +88,33 @@ class Job_Posting_Qualifier(Job_Posting):
             }
         }
         return job_post_json
+    
+
+class Job_Application(BaseModel):
+    job_posting_description: str
+    question_texts: List[str] | None = None
+    _answer_texts: List[str] | None = None
+    chat_log: List[str] | None = None
+
+    def add_description_to_questions(self):
+        if self.question_texts is None:
+            self.question_texts = [self.job_posting_description] 
+        self.question_texts.insert(0, self.job_posting_description)
+
+    @property
+    def answer_texts(self):
+        if self._answer_texts is None:
+            self._answer_texts = self.extract_answers_from_log()
+        return self._answer_texts
+    
+    @answer_texts.setter
+    def answer_texts(self, value):
+        self._answer_texts = value
+
+    def extract_answers_from_log(self) -> List[str]:
+        if self.chat_log is None:
+            raise ValueError('No answers found')
+        answer_texts = [entry['content'] for entry in self.chat_log if entry['role'] == 'assistant']
+        return answer_texts 
+    
+

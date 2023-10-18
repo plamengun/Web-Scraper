@@ -1,6 +1,6 @@
 import json
 import re
-from common.models import Job_Posting, Job_Application, Job_Posting_Qualifier
+from common.models import Job_Application, Job_Posting_Qualifier
 from common.variables import *
 from services.gpt_requests_service import askgpt
 
@@ -31,39 +31,26 @@ def match_re_pattern(pattern, string: str) -> str:
     return final
 
 
-def extract_data_from_xml(job_post: Job_Posting):
+def extract_data_from_xml(job_post):
     xml_to_str = job_post.description.text
     posted_on = match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
     return posted_on
-
-
-def create_job_posting(title: str, url: str, job_post_data: tuple) -> Job_Posting:
-    posted_before, description, connects_required, connects_available, client_country, application_page_url = job_post_data
-    job_posting = Job_Posting(title=title, 
-                              url=url, 
-                              posted_before=posted_before, 
-                              description=description, 
-                              connects_required=connects_required, 
-                              connects_available=connects_available, 
-                              client_country=client_country, 
-                              application_page_url=application_page_url)
-    return job_posting
 
 
 def create_job_application(job_posting_description: str) -> Job_Application:
     job_application =  Job_Application(job_posting_description)
     return job_application
 
+def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> Job_Posting_Qualifier:
 
-def create_job_posting_qualifier(job_posting: Job_Posting, client_info_data: str) -> Job_Posting_Qualifier:
-    job_posting_qualifier = Job_Posting_Qualifier(title=job_posting.title, 
-                                                  url=job_posting.url, 
-                                                  posted_before=job_posting.posted_before, 
-                                                  description=job_posting.description, 
-                                                  connects_required=job_posting.connects_required,
-                                                  connects_available=job_posting.connects_available,
-                                                  client_country=job_posting.client_country,
-                                                  application_page_url=job_posting.application_page_url,
+    job_posting_qualifier = Job_Posting_Qualifier(title=job_posting_data[0], 
+                                                  url=job_posting_data[1], 
+                                                  description=job_posting_data[2],
+                                                  posted_before=job_posting_data[3], 
+                                                  connects_required=job_posting_data[4],
+                                                  connects_available=job_posting_data[5],
+                                                  client_country=job_posting_data[6],
+                                                  application_page_url=job_posting_data[7],
                                                   client_properties=client_info_data)
     return job_posting_qualifier
 

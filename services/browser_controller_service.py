@@ -126,7 +126,7 @@ class UpworkScraper:
         client_country_text = self._check_if_text_element_exists(self.page.query_selector(f'//ul[@class="list-unstyled cfe-ui-job-about-client-visitor m-0-bottom"]/li[@data-qa="client-location"]/strong'))
         apply_now_locator_str = self._check_if_object_element_exists(f'//button[@aria-label="Apply Now"]')
         application_page_url = self._go_to_application_page(apply_now_locator_str)
-        return posted_before_text, description, connects_required, connects_available, client_country_text, application_page_url
+        return description, posted_before_text, connects_required, connects_available, client_country_text, application_page_url
 
     
     def _go_to_application_page(self, button_locator_str: str):
