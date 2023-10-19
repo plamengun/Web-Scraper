@@ -4,15 +4,15 @@ from typing import List
 
 
 class Job_Posting_Qualifier(BaseModel):
-    title: str #
-    url: str #
-    posted_before: str #
-    description: str #
-    connects_required: int | str #
-    connects_available: int | str #
-    client_country: str #
-    application_page_url: str #
-    client_properties: str #
+    title: str
+    url: str
+    posted_before: str
+    description: str
+    connects_required: int | str
+    connects_available: int | str
+    client_country: str
+    application_page_url: str
+    client_properties: str
     gpt_response: str | None = None
     gpt_answer: str | None = None
     _status: str | None = 'Not Applied'

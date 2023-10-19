@@ -1,6 +1,17 @@
 from django.db import models
+import datetime
+from typing import List
 
-from django.db import models
+
+class ScrapeRun(models.Model):
+    start_time = models.DateTimeField()
+    finish_time = models.DateTimeField()
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='users', null=True, blank=True)
+    
+    def get_job_posting_qualifiers(self):
+        return JobPostingQualifier.objects.filter(scrape_run=self)
+
+
 
 class JobPostingQualifier(models.Model):
     title = models.CharField(max_length=400)
@@ -15,13 +26,29 @@ class JobPostingQualifier(models.Model):
     gpt_response = models.TextField(blank=True, null=True)
     gpt_answer = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20, default='Not Applied')
+    scrape_run = models.ForeignKey(ScrapeRun, on_delete=models.CASCADE)
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        if value != 'Applied':
+            raise ValueError('Invalid job_posting status value')
+        self._status = value
+
+    def check_available_connects(self) -> bool:
+        if self.connects_available - self.connects_required >= 0:
+            return True
+        return False
 
     def parse_gpt_response(self):
         if self.gpt_response is None:
             raise ValueError('No qualification response str provided from ChatGPT.')
         response_texts = [entry['content'] for entry in self.gpt_response if entry['role'] == 'assistant']
         return response_texts
-
+    
     def check_gpt_answer(self):
         if self.gpt_answer is None:
             raise ValueError('No qualification answer str provided from ChatGPT.')
@@ -32,9 +59,9 @@ class JobPostingQualifier(models.Model):
         elif 'NO' in answer_texts_list[0]:
             self.gpt_answer = answer_texts_list[1]
             return False
-        self.gpt_answer = 'Gpt Qualification Answer not found.'
+        self.gpt_answer='Gpt Qualification Answer not found.'
         return False
-
+    
     def _parse_gpt_answer(self):
         if self.gpt_answer is None:
             raise ValueError('No qualification answer str provided from ChatGPT.')
@@ -42,6 +69,10 @@ class JobPostingQualifier(models.Model):
         answer_texts_list = answer_texts.split('\n')
         final_answer_texts_list = [el for el in answer_texts_list if 'Answer' in el or 'Explanation' in el]
         return final_answer_texts_list
+        
+    def _get_current_datetime_as_string(self):
+        current_datetime = datetime.datetime.now()
+        return current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
     def convert_to_str(self):
         job_post_qualifier_str = f"Title: {self.title}\n"
@@ -51,23 +82,20 @@ class JobPostingQualifier(models.Model):
         job_post_qualifier_str += f"Job Post Description: {self.description}"
         job_post_qualifier_str += f"{self.client_properties}"
         return job_post_qualifier_str
-
+    
     def convert_to_json(self):
         job_post_json = {
-            "time_of_application_attempt": self._get_current_datetime_as_string(),
-            "result_of_application_attempt": self.status,
-            "title": self.title,
-            "url": self.url,
-            "posted_before": self.posted_before,
-            "description": self.description,
-            "connects_required": self.connects_required,
-            "connects_available": self.connects_available,
-            "client_country": self.client_country,
-            "gpt_qualifying_answer": self.gpt_answer,
+            "fields": {
+                "time_of_application_attempt": self._get_current_datetime_as_string(),
+                "result_of_application_attempt": self.status,
+                "title": self.title,
+                "url": self.url,
+                "posted_before": self.posted_before,
+                "description": self.description,
+                "connects_required": self.connects_required,
+                "connects_available": self.connects_available,
+                "client_country": self.client_country,
+                "gpt_qualifying_answer": self.gpt_answer
+            }
         }
         return job_post_json
-
-    def _get_current_datetime_as_string(self):
-        from datetime import datetime
-        current_datetime = datetime.now()
-        return current_datetime.strftime("%Y-%m-%d %H:%M:%S")

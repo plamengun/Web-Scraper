@@ -37,12 +37,12 @@ def extract_data_from_xml(job_post):
     return posted_on
 
 
-def create_job_application(job_posting_description: str) -> Job_Application:
-    job_application =  Job_Application(job_posting_description)
+def create_job_application(job_posting_description_data: str) -> Job_Application:
+    job_application =  Job_Application(job_posting_description=job_posting_description_data)
     return job_application
 
-def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> Job_Posting_Qualifier:
 
+def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> Job_Posting_Qualifier:
     job_posting_qualifier = Job_Posting_Qualifier(title=job_posting_data[0], 
                                                   url=job_posting_data[1], 
                                                   description=job_posting_data[2],

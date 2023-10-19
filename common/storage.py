@@ -530,5 +530,10 @@
         "https://www.upwork.com/jobs/Need-help-Deep-Learning-Assignment_%7E012924065af18fd3b6?source=rss",
         "Hello There,\n\nI need your help in completing my Deep learning assessment.\nI am sharing all the details below. PLease go through them and let me know.\nAs mentioned in the task, I need 2 python files and a report.\n\nThe assignment can be found here: https://www.cse.unsw.edu.au/~cs9444/23T3/hw1/index.html\nDownlaod the zip file (project file)\n\nI need it delivered in 3-4 days.\nLet me know the quoatation?\nQuality matters more, I need to score 18/20 that is the only expectation I have from your end.\n\nLet me know if this is possible.\n\nThanks and regards,\nJai",
         "October 03, 2023 07:15 UTC"
+    ],
+    "Fractional CTO for Fintech - Upwork": [
+        "https://www.upwork.com/jobs/Fractional-CTO-for-Fintech_%7E0129aadbb4ae6e04ae?source=rss",
+        "We seek a highly experienced Fractional CTO to join our team for a project over twelve months. The ideal candidate should deeply understand IT project management, Agile software development, and API integration. Proficiency in Node.js, Amazon Web Services, machine learning, python, and React is also required.\n\nAs a Fractional CTO, your primary responsibility will be to provide strategic guidance and technical leadership for our project. You will work closely with the remote development team, ensuring efficient delivery and adherence to best practices. Additionally, you will be responsible for managing the project timeline, budget, and resources.\n\nTo be considered for this position, please submit a detailed proposal outlining how you can contribute to our project's success. Include relevant past projects demonstrating your expertise, and provide links to completed work. We are looking for someone with a proven track record in delivering successful IT projects.\n\nNote: Some of the content in this job post may have been auto-generated using advanced AI.",
+        "October 18, 2023 06:08 UTC"
     ]
 }
