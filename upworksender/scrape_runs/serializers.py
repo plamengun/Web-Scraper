@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import JobPostingQualifier
+from .models import JobPostingQualifier, ScrapeRun
 
 class JobPostingQualifierSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobPostingQualifier
-        fields = (
+        fields = [
             'id',
             'title',
             'url',
@@ -19,7 +19,7 @@ class JobPostingQualifierSerializer(serializers.ModelSerializer):
             'gpt_answer',
             'status',
             'scrape_run',
-        )
+        ]
 
     def validate_status(self, value):
         if value != 'Applied':
@@ -30,3 +30,39 @@ class JobPostingQualifierSerializer(serializers.ModelSerializer):
         if 'status' in data:
             self.validate_status(data['status'])
         return data
+    
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance        
+    
+
+class ScrapeRunSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScrapeRun
+        fields = ('id', 'start_time', 'finish_time')
+
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance
+
+
+
+
+
+# {
+#     "title": "asd",
+#     "url": "asd",
+#     "posted_before": "asd",
+#     "description": "asd",
+#     "connects_required": "asd",
+#     "connects_available": "asd",
+#     "client_country": "asd",
+#     "application_page_url": "asd",
+#     "client_properties": "asd",
+#     "gpt_response": "asd",
+#     "gpt_answer": "asd",
+#     "status": "Not Applied",
+#     "scrape_run": "asd"
+# }

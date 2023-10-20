@@ -28,15 +28,12 @@ class JobPostingQualifier(models.Model):
     status = models.CharField(max_length=20, default='Not Applied')
     scrape_run = models.ForeignKey(ScrapeRun, on_delete=models.CASCADE)
 
-    @property
-    def status(self):
-        return self._status
 
-    @status.setter
-    def status(self, value):
-        if value != 'Applied':
-            raise ValueError('Invalid job_posting status value')
-        self._status = value
+    def change_status(self):
+        if self.status != 'Not Applied':
+            return 'Status already set to Applied'
+        self.status = 'Applied'
+        return 'Status set to Applied'
 
     def check_available_connects(self) -> bool:
         if self.connects_available - self.connects_required >= 0:
