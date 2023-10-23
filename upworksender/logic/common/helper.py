@@ -22,8 +22,8 @@ def save_storage(storage_data):
         json.dump(storage_data, file, sort_keys=False, indent=4)
 
     
-def match_re_pattern(pattern, string: str) -> str:
-    match_pattern = re.search(pattern, string, re.DOTALL | re.IGNORECASE)
+async def match_re_pattern(pattern, string: str) -> str:
+    match_pattern = await re.search(pattern, string, re.DOTALL | re.IGNORECASE)
     if match_pattern:
         final = match_pattern.group(1).strip()
     else:
@@ -31,18 +31,18 @@ def match_re_pattern(pattern, string: str) -> str:
     return final
 
 
-def extract_data_from_xml(job_post):
-    xml_to_str = job_post.description.text
-    posted_on = match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
+async def extract_data_from_xml(job_post):
+    xml_to_str = await job_post.description.text
+    posted_on = await match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
     return posted_on
 
 
-def create_job_application(job_posting_description_data: str) -> JobApplication:
-    job_application =  JobApplication(job_posting_description=job_posting_description_data)
+async def create_job_application(job_posting_description_data: str) -> JobApplication:
+    job_application = await JobApplication(job_posting_description=job_posting_description_data)
     return job_application
 
 
-def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> JobPostingQualifier:
+async def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> JobPostingQualifier:
     job_posting_qualifier = JobPostingQualifier()
     job_posting_qualifier.title=job_posting_data[0], 
     job_posting_qualifier.url=job_posting_data[1], 
@@ -56,15 +56,15 @@ def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str)
     return job_posting_qualifier
 
 
-def get_gpt_answers_apply(job_application: JobApplication) -> list[str]:
-    job_application.add_description_to_questions()
-    chat_log = askgpt(ROLE_APPLY_PROMPT, job_application.question_texts)
+async def get_gpt_answers_apply(job_application: JobApplication) -> list[str]:
+    await job_application.add_description_to_questions()
+    chat_log = await askgpt(ROLE_APPLY_PROMPT, job_application.question_texts)
     job_application.chat_log = chat_log
     answers = job_application.answer_texts
     return answers
 
 
-def get_gpt_answers_qualify(job_posting_qualifier: JobPostingQualifier):
+async def get_gpt_answers_qualify(job_posting_qualifier: JobPostingQualifier):
     client_properties_list = [job_posting_qualifier.convert_to_str()]
-    chat_log = askgpt(ROLE_QUALIFY_PROMPT, client_properties_list)
+    chat_log = await askgpt(ROLE_QUALIFY_PROMPT, client_properties_list)
     return chat_log
