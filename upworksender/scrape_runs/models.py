@@ -25,18 +25,17 @@ class JobPostingQualifier(models.Model):
     client_properties = models.TextField()
     gpt_response = models.TextField(blank=True, null=True)
     gpt_answer = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=20, default='Not Applied')
+    status = models.CharField(max_length=20, default='Not_Applied')
     scrape_run = models.ForeignKey(ScrapeRun, on_delete=models.CASCADE)
 
-
     def change_status(self):
-        if self.status != 'Not Applied':
+        if self.status != 'Not_Applied':
             return 'Status already set to Applied'
         self.status = 'Applied'
         return 'Status set to Applied'
 
     def check_available_connects(self) -> bool:
-        #TODO  "error": "unsupported operand type(s) for -: 'tuple' and 'tuple'"
+        #TODO Add status connects not sufficient
         if self.connects_available[0] - self.connects_required[0] >= 0:
             return True
         return False
@@ -85,7 +84,7 @@ class JobPostingQualifier(models.Model):
         job_post_json = {
             "fields": {
                 "time_of_application_attempt": self._get_current_datetime_as_string(),
-                "result_of_application_attempt": self.status[0],
+                "result_of_application_attempt": self.status,
                 "title": self.title[0],
                 "url": self.url[0],
                 "posted_before": self.posted_before[0],
@@ -105,9 +104,9 @@ class JobApplication(BaseModel):
     _answer_texts: List[str] | None = None
     chat_log: List[str] | None = None
 
-    def add_description_to_questions(self):
-        if self.question_texts is None:
-            self.question_texts = [self.job_posting_description] 
+    async def add_description_to_questions(self):
+        if self.job_posting_description is None:
+            raise ValueError('Job posting description is missing!') 
         self.question_texts.insert(0, self.job_posting_description)
 
     @property

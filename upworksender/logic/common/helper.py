@@ -38,7 +38,7 @@ async def extract_data_from_xml(job_post):
 
 
 async def create_job_application(job_posting_description_data: str) -> JobApplication:
-    job_application = await JobApplication(job_posting_description=job_posting_description_data)
+    job_application = JobApplication(job_posting_description=job_posting_description_data)
     return job_application
 
 
@@ -58,7 +58,9 @@ async def create_job_posting_qualifier(job_posting_data: tuple, client_info_data
 
 async def get_gpt_answers_apply(job_application: JobApplication) -> list[str]:
     await job_application.add_description_to_questions()
+    #TODO  "error": "object NoneType can't be used in 'await' expression"
     chat_log = await askgpt(ROLE_APPLY_PROMPT, job_application.question_texts)
+    #TODO returns an empty chat log WHY?
     job_application.chat_log = chat_log
     answers = job_application.answer_texts
     return answers

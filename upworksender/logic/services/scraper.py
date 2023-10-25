@@ -65,8 +65,6 @@ class UpworkScraper:
                 rss_feed_button = self.page.get_by_text("RSS")
             new_page_info = await self._new_page(rss_feed_button)
             new_page = await new_page_info.value
-            # await new_page.wait_for_load_state()
-            # await new_page.bring_to_front()
             rss_feeds.append(new_page.url)
             await new_page.close()
             await self.page.bring_to_front()
@@ -82,6 +80,7 @@ class UpworkScraper:
         return new_page_info
     
     async def check_application_page_url(self, application_page_url: str) -> bool:
+        #TODO "error": "url: expected string, got object"
         if self.page.url != application_page_url:
             page = await self.context.new_page()
             await page.goto(application_page_url)
@@ -104,10 +103,11 @@ class UpworkScraper:
             return element_str
         raise ValueError(f'Element with path {locator_str} missing from page.')
     
-    async def _check_if_text_elements_exist(self, elements) -> List[str]:
-        if elements:
-            return await elements.all_inner_texts()
-        return 'None'
+    async def _check_if_text_elements_exist(self, locator_str) -> List[str]:
+        if self.page.wait_for_selector(locator_str):
+            elements_str = await self.page.locator(locator_str).all_inner_texts()
+            return elements_str
+        return ValueError(f'Elements with path {locator_str} missing from page.')
     
     async def _check_if_object_element_exists(self, locator_str: str) -> str:
         button = self.page.locator(locator_str)
@@ -115,12 +115,6 @@ class UpworkScraper:
             return locator_str
         raise ValueError('Element not present on the page')
     
-    # async def _check_if_numeric_element_exists(self, element) -> int | str:
-    #     if element:
-    #         text = await element.inner_text()
-    #         return int(re.findall(r'\d+', text)[0])
-    #     return 'None'
-
     async def _check_if_numeric_element_exists(self, locator_str) -> int | str:
         if self.page.wait_for_selector(locator_str):
             element_str = await self.page.locator(locator_str).inner_text()
@@ -128,11 +122,7 @@ class UpworkScraper:
         raise ValueError(f'Element with path {locator_str} missing from page.')
 
     async def job_posting_scrape(self):
-        # if self.page.wait_for_selector(f"//div[@data-test='Description']//p"):
-        #     description = await self.page.locator(f"//div[@data-test='Description']//p").inner_text()
         description = await self._check_if_text_element_exists(f"//div[@data-test='Description']//p")
-        # connects_required = await self._check_if_numeric_element_exists(self.page.query_selector(f"//div[@data-test='ConnectsAuction']/div[1]"))
-        # connects_available = await self._check_if_numeric_element_exists(self.page.query_selector(f"//div[@data-test='ConnectsAuction']/div[2]"))
         connects_required = await self._check_if_numeric_element_exists(f"//div[@data-test='ConnectsAuction']/div[1]")
         connects_available = await self._check_if_numeric_element_exists(f"//div[@data-test='ConnectsAuction']/div[2]")
         posted_before_text = await self._check_if_text_element_exists(f"//div[@data-test='PostedOn']")
@@ -141,7 +131,6 @@ class UpworkScraper:
         application_page_url = await self._go_to_application_page(apply_now_locator_str)
         return description, posted_before_text, connects_required, connects_available, client_country_text, application_page_url
 
-    
     async def _go_to_application_page(self, button_locator_str: str):
         await self.page.click(button_locator_str)
         await self.page.wait_for_event("load")
@@ -149,11 +138,9 @@ class UpworkScraper:
         return application_page_url
 
     async def scrape_client_info(self) -> str:
-        #TODO await returns Coroutine element
-        client_info_container = await self._check_if_text_elements_exist(self.page.locator(f"//div[@data-test='AboutClientUser']"))
-        client_info_proposals = await self._check_if_text_elements_exist(self.page.locator(f"//section[@data-test='ClientActivity']//ul"))
+        client_info_container = await self._check_if_text_elements_exist(f"//div[@data-test='AboutClientUser']")
+        client_info_proposals = await self._check_if_text_elements_exist(f"//section[@data-test='ClientActivity']//ul")
         proposal_items = client_info_proposals[0].split("\n")
-        #TODO potentially pass all proposal items
         proposal_items_clean = [item.strip() for item in proposal_items]
         proposal_str = proposal_items_clean[0] + proposal_items_clean[1]
         items = client_info_container[0].split("\n")
@@ -174,8 +161,10 @@ class UpworkScraper:
                 return 'milestone'
             if by_hour:
                 #TODO Check if this option is on page. If not apply.Example of job: https://www.upwork.com/ab/proposals/job/~0151606201566a3c9f/apply/
-                await self.page.get_by_text('Select a duration').click()
-                await self.page.get_by_text('1 to 3 months').click()
+                #TODO elements not present on page
+                # await self.page.get_by_text('Select a duration').click()
+                # await self.page.get_by_text('1 to 3 months').click()
+                #TODO Directly send!
                 return 'hour'
             if by_project:
                 await self.page.get_by_text('Select a duration').click()
@@ -183,9 +172,9 @@ class UpworkScraper:
                 return 'project'
             else:
                 return None
+            
 
-
-    async def job_posting_apply(self) -> str:
+    async def job_posting_apply(self, description: str) -> str:
         #TODO make in try except block
         #TODO check success page after submission
 
@@ -194,38 +183,42 @@ class UpworkScraper:
         question_fields_list = []
         cover_letter_field = await self.page.query_selector('//div[@class="cover-letter-area"]//textarea')
         #TODO AttributeError: 'NoneType' object has no attribute 'text_content' -> if this then take description from Job object
-        description = await self.page.query_selector(f"//div[@class='description']").text_content()
+        # description = await self.page.query_selector(f"//div[@class='description']").text_content()
 
-        if await self.page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
+        #TODO https://www.upwork.com/ab/proposals/job/~0123c252110d541ad4/apply/ This postin has questions and is qualified
+
+        if self.page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
             questions_elements = await self.page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//label[@class="up-label"]')
             for element in questions_elements:
-                text_content = await element.text_content().strip()
+                text_content = await element.text_content()
+                text_content.strip()
                 questions_texts_list.append(text_content)
             question_fields_list = await self.page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//textarea')
             question_fields_list.insert(0, cover_letter_field)
 
-        job_application = create_job_application(description)
+        job_application = await create_job_application(description)
         job_application.question_texts = questions_texts_list
 
-        answers = get_gpt_answers_apply(job_application)
+        answers = await get_gpt_answers_apply(job_application)
 
         for i, element in enumerate((question_fields_list)):
             if i < len(answers):
                 answer = answers[i].strip()
-                element.fill(answer)
+                await element.fill(answer)
 
         await self.check_application_page_type()
         
-        send_button = await self.page.locator(f"//footer[@class='pb-10 mt-20']/div/button[@class='up-btn up-btn-primary m-0']")
+        send_button = self.page.locator(f"//footer[@class='pb-10 mt-20']/div/button[@class='up-btn up-btn-primary m-0']")
+        # "error": "object Locator can't be used in 'await' expression"
         await send_button.click()
         await self.page.wait_for_load_state("load")
 
-        #ToDo Final Popup Menu
+        #Final Popup Menu
         popup = self.page.locator(f"//div[@class='up-modal-content up-modal-headerless up-modal-desktop-container']")
         if popup:
-            accept_terms_button = await self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
+            accept_terms_button = self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
             await accept_terms_button.click()
-            apply_button = await self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
+            apply_button = self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
             await apply_button.click()
 
             return 'Job Application Successful'

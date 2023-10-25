@@ -39,10 +39,10 @@ async def driver(pages: list[str], scraper: UpworkScraper):
                 print(job_posting_qualifier.convert_to_json())
                 #apply to job posting
                 if job_posting_qualifier.check_available_connects() and job_posting_qualifier_answer:
-                    await scraper.check_application_page_url(job_posting_qualifier.application_page_url)
-                    await scraper.job_posting_apply()
+                    await scraper.check_application_page_url(job_posting_qualifier.application_page_url[0])
+                    await scraper.job_posting_apply(job_posting_qualifier.description[0])
                     job_posting_qualifier.status = 'Applied'
-                    put_record_into_airtable(job_posting_qualifier.convert_to_json())
+                    print(put_record_into_airtable(job_posting_qualifier.convert_to_json()))
                 else:
-                    put_record_into_airtable(job_posting_qualifier.convert_to_json())
+                    print(put_record_into_airtable(job_posting_qualifier.convert_to_json()))
         return job_dict

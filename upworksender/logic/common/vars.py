@@ -168,8 +168,8 @@ Good: 1h-24h
 Bad: 1 day and above
 
 COUNTRY:
-Excellent: (United States, United Kingdom, Canada, Australia, New Zealand, Netherlands, Denmark, Sweden, Finland)
-Good: (Germany, Czech Republic, Hungary, Philipines, United Arab Emirates, Israel)
+Excellent: (United States, United Kingdom, Canada, Australia, New Zealand, Netherlands, Denmark, Sweden, Finland, France, Belgium, South Africa)
+Good: (Germany, Czech Republic, Hungary, Philipines, United Arab Emirates, Israel, Romania)
 Bad: (India, Pakistan, China, Nigeria, Bangladesh, Egypt, Indonesia)
 
 CONNECTS REQUIRED:
