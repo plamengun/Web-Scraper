@@ -1,4 +1,5 @@
-from adrf.views import APIView
+from adrf.views import APIView as AsyncAPIView
+from rest_framework.views import APIView 
 from rest_framework import status
 from rest_framework.response import Response
 from .models import ScrapeRun
@@ -15,7 +16,7 @@ from logic.services.scraper import UpworkScraper
 #         response = await execute_functionality()
 #         return response
 
-class ScraperRunView(APIView):
+class ScraperRunView(AsyncAPIView):
     queryset = ScrapeRun.objects.all()
     serializer_class = ScrapeRunSerializer
 

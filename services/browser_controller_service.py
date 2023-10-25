@@ -59,9 +59,15 @@ class UpworkScraper:
         rss_feeds = []
         #TODO refactor to click on expand page instead of looping
         while n < 1:
-            rss_feed_dropdown = self.page.locator(f"//div[@id='rss-atom-links']")
-            rss_feed_dropdown.click()
-            rss_feed_button = self.page.locator(f"//div[@id='rss-atom-links']//span[@role='button' and normalize-space()='RSS']/span")
+            if self.page.wait_for_selector(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//div[@class='air3-dropdown-secondary']//button"):
+                rss_feed_dropdown = self.page.locator(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//div[@class='air3-dropdown-secondary']//button")
+                rss_feed_dropdown.click()
+            # rss_feed_dropdown = self.page.locator(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//button[@id='dropdown-secondary-label-279']//div[@data-test='UpCIcon']")
+            # rss_feed_dropdown.click()
+            # rss_feed_dropdown.bounding_box()
+            # rss_feed_button = self.page.locator(f"//div[@id='rss-atom-links']//span[@role='button' and normalize-space()='RSS']/span")
+            if self.page.get_by_text("RSS").is_visible():
+                rss_feed_button = self.page.get_by_text("RSS")
             new_page_info = self._new_page(rss_feed_button)
             new_page = new_page_info.value
             new_page.wait_for_load_state()
@@ -69,9 +75,9 @@ class UpworkScraper:
             rss_feeds.append(new_page.url)
             new_page.close()
             self.page.bring_to_front()
-            self.page.wait_for_selector(f"//div[@class='up-card-footer pb-0 d-flex justify-space-between']//button[@class='up-pagination-item up-btn up-btn-link']", timeout=5000)
-            next_button = self.page.locator(f"//div[@class='up-card-footer pb-0 d-flex justify-space-between']//button[@class='up-pagination-item up-btn up-btn-link']/div[@class='next-icon up-icon']")
-            next_button.click()
+            if self.page.wait_for_selector(f"//button[@data-ev-label='pagination_next_page']"):
+                next_button = self.page.locator(f"//button[@data-ev-label='pagination_next_page']")
+                next_button.click()
             n += 1
         return rss_feeds
 

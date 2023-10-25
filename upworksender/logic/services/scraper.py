@@ -57,26 +57,27 @@ class UpworkScraper:
     async def rss_feed_scrape(self):
         n = 0
         rss_feeds = []
-        #TODO refactor to click on expand page instead of looping
         while n < 1:
-            rss_feed_dropdown = self.page.locator(f"//div[@id='rss-atom-links']")
-            await rss_feed_dropdown.click()
-            rss_feed_button = self.page.locator(f"//div[@id='rss-atom-links']//span[@role='button' and normalize-space()='RSS']/span")
+            if self.page.wait_for_selector(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//div[@class='air3-dropdown-secondary']//button"):
+                rss_feed_dropdown = self.page.locator(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//div[@class='air3-dropdown-secondary']//button")
+                await rss_feed_dropdown.click()
+            if self.page.get_by_text("RSS").is_visible():
+                rss_feed_button = self.page.get_by_text("RSS")
             new_page_info = await self._new_page(rss_feed_button)
-            new_page = new_page_info.value
-            await new_page.wait_for_load_state()
-            await new_page.bring_to_front()
+            new_page = await new_page_info.value
+            # await new_page.wait_for_load_state()
+            # await new_page.bring_to_front()
             rss_feeds.append(new_page.url)
             await new_page.close()
             await self.page.bring_to_front()
-            await self.page.wait_for_selector(f"//div[@class='up-card-footer pb-0 d-flex justify-space-between']//button[@class='up-pagination-item up-btn up-btn-link']", timeout=5000)
-            next_button = self.page.locator(f"//div[@class='up-card-footer pb-0 d-flex justify-space-between']//button[@class='up-pagination-item up-btn up-btn-link']/div[@class='next-icon up-icon']")
-            await next_button.click()
+            if self.page.wait_for_selector(f"//button[@data-ev-label='pagination_next_page']"):
+                next_button = self.page.locator(f"//button[@data-ev-label='pagination_next_page']")
+                await next_button.click()
             n += 1
         return rss_feeds
 
     async def _new_page(self, button):
-        with self.context.expect_page() as new_page_info:
+        async with self.context.expect_page() as new_page_info:
             await button.click()
         return new_page_info
     
@@ -89,6 +90,7 @@ class UpworkScraper:
         return True
     
     async def check_job_page_url(self, job_url: str) -> bool:
+        #TODO check if job posting page exists
         if self.page != job_url:
             page = await self.context.new_page()
             await page.goto(job_url)
@@ -96,10 +98,11 @@ class UpworkScraper:
             return False
         return True
     
-    async def _check_if_text_element_exists(self, element) -> str:
-        if element:
-            return await element.inner_text()
-        return 'None'
+    async def _check_if_text_element_exists(self, locator_str) -> str:
+        if self.page.wait_for_selector(locator_str):
+            element_str = await self.page.locator(locator_str).inner_text()
+            return element_str
+        raise ValueError(f'Element with path {locator_str} missing from page.')
     
     async def _check_if_text_elements_exist(self, elements) -> List[str]:
         if elements:
@@ -112,19 +115,29 @@ class UpworkScraper:
             return locator_str
         raise ValueError('Element not present on the page')
     
-    async def _check_if_numeric_element_exists(self, element) -> int | str:
-        if element:
-            text = await element.inner_text()
-            return int(re.findall(r'\d+', text)[0])
-        return 'None'
+    # async def _check_if_numeric_element_exists(self, element) -> int | str:
+    #     if element:
+    #         text = await element.inner_text()
+    #         return int(re.findall(r'\d+', text)[0])
+    #     return 'None'
+
+    async def _check_if_numeric_element_exists(self, locator_str) -> int | str:
+        if self.page.wait_for_selector(locator_str):
+            element_str = await self.page.locator(locator_str).inner_text()
+            return int(re.findall(r'\d+', element_str)[0])
+        raise ValueError(f'Element with path {locator_str} missing from page.')
 
     async def job_posting_scrape(self):
-        description = await self._check_if_text_element_exists(self.page.query_selector(f'//div[@data-test="description"]/div'))
-        connects_required = await self._check_if_numeric_element_exists(self.page.query_selector(f'//div[@data-test="connects-auction"]/div'))
-        connects_available = await self._check_if_numeric_element_exists(self.page.query_selector(f'//div[@data-test="connects-auction"]/div[@class="mt-10"]'))
-        posted_before_text = await self._check_if_text_element_exists(self.page.query_selector(f'//div[@id="posted-on"]//span[@class]/span'))
-        client_country_text = await self._check_if_text_element_exists(self.page.query_selector(f'//ul[@class="list-unstyled cfe-ui-job-about-client-visitor m-0-bottom"]/li[@data-qa="client-location"]/strong'))
-        apply_now_locator_str = await self._check_if_object_element_exists(f'//button[@aria-label="Apply Now"]')
+        # if self.page.wait_for_selector(f"//div[@data-test='Description']//p"):
+        #     description = await self.page.locator(f"//div[@data-test='Description']//p").inner_text()
+        description = await self._check_if_text_element_exists(f"//div[@data-test='Description']//p")
+        # connects_required = await self._check_if_numeric_element_exists(self.page.query_selector(f"//div[@data-test='ConnectsAuction']/div[1]"))
+        # connects_available = await self._check_if_numeric_element_exists(self.page.query_selector(f"//div[@data-test='ConnectsAuction']/div[2]"))
+        connects_required = await self._check_if_numeric_element_exists(f"//div[@data-test='ConnectsAuction']/div[1]")
+        connects_available = await self._check_if_numeric_element_exists(f"//div[@data-test='ConnectsAuction']/div[2]")
+        posted_before_text = await self._check_if_text_element_exists(f"//div[@data-test='PostedOn']")
+        client_country_text = await self._check_if_text_element_exists(f"//ul[@class='features text-light-on-muted list-unstyled mt-4']/li[@data-qa='client-location']/strong")
+        apply_now_locator_str = await self._check_if_object_element_exists(f"//button[@aria-label='Apply Now']")
         application_page_url = await self._go_to_application_page(apply_now_locator_str)
         return description, posted_before_text, connects_required, connects_available, client_country_text, application_page_url
 
@@ -136,8 +149,9 @@ class UpworkScraper:
         return application_page_url
 
     async def scrape_client_info(self) -> str:
-        client_info_container = await self._check_if_text_elements_exist(self.page.locator(f"//div[@class='col-12 job-details-sidebar d-none d-lg-flex']//div[@data-testid='about-client-container']"))
-        client_info_proposals = await self._check_if_text_elements_exist(self.page.locator(f"//div[@data-test='client-activity']//ul[@class='list-unstyled']"))
+        #TODO await returns Coroutine element
+        client_info_container = await self._check_if_text_elements_exist(self.page.locator(f"//div[@data-test='AboutClientUser']"))
+        client_info_proposals = await self._check_if_text_elements_exist(self.page.locator(f"//section[@data-test='ClientActivity']//ul"))
         proposal_items = client_info_proposals[0].split("\n")
         #TODO potentially pass all proposal items
         proposal_items_clean = [item.strip() for item in proposal_items]

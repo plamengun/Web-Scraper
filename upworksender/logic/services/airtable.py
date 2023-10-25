@@ -16,10 +16,10 @@ def put_record_into_airtable(record_data: dict):
         'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json',
     }
-    
+    #TODO Error: 422 - {"error":{"type":"INVALID_VALUE_FOR_COLUMN","message":"Field \"title\" cannot accept the provided value"}}
     response = requests.post(endpoint, headers=headers, json=record_data)
 
     if response.status_code == 200:
-        print("Record inserted successfully")
+        return "Record inserted successfully"
     else:
-        print(f"Error: {response.status_code} - {response.text}")
+        return f"Error: {response.status_code} - {response.text}"

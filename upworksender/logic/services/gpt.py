@@ -22,13 +22,14 @@ async def askgpt(role, questions, chat_log=None):
     question = questions[0]
     chat_log.append({'role': 'user', 'content': question})
     
-    response = await openai.Completion.create(
+    #TODO "error": "object OpenAIObject can't be used in 'await' expression"
+    response = openai.Completion.create(
         engine="text-davinci-003",
         prompt="\n".join([message['content'] for message in chat_log]),
         max_tokens=500
     )
     
-    answer = await response.choices[0]['text']
+    answer = response.choices[0]['text']
     chat_log.append({'role': 'assistant', 'content': answer})
     
     # Recursively call askgpt with the remaining questions

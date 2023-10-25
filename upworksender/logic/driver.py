@@ -9,16 +9,16 @@ from logic.services.scraper import UpworkScraper
 async def driver(pages: list[str], scraper: UpworkScraper):
     job_dict = {}
     for page in pages:
-        resp_url = await requests.get(f"{page}")
-        soup = await BeautifulSoup(resp_url.content, 'xml')
-        job_posts = await soup.find_all('item')
+        resp_url = requests.get(f"{page}")
+        soup = BeautifulSoup(resp_url.content, 'xml')
+        job_posts = soup.find_all('item')
 
         for job_post in job_posts:
             if job_post.title.text not in []:
                 #extract data for the job posting
-                posted_on = await extract_data_from_xml(job_post)
-                title = await job_post.title.text
-                url = await job_post.link.text
+                posted_on = extract_data_from_xml(job_post)
+                title = job_post.title.text
+                url = job_post.link.text
 
                 await scraper.check_job_page_url(url)
                 #TODO CHECK IF JOB POSTING PAGE WILL OPEN OR JOB NOT AVAILABLE
@@ -40,22 +40,9 @@ async def driver(pages: list[str], scraper: UpworkScraper):
                 #apply to job posting
                 if job_posting_qualifier.check_available_connects() and job_posting_qualifier_answer:
                     await scraper.check_application_page_url(job_posting_qualifier.application_page_url)
-                    print(await scraper.job_posting_apply())
+                    await scraper.job_posting_apply()
                     job_posting_qualifier.status = 'Applied'
-                    print(put_record_into_airtable(job_posting_qualifier.convert_to_json()))
+                    put_record_into_airtable(job_posting_qualifier.convert_to_json())
                 else:
-                    print(put_record_into_airtable(job_posting_qualifier.convert_to_json()))
+                    put_record_into_airtable(job_posting_qualifier.convert_to_json())
         return job_dict
-
-        
-# async def execute_functionality():
-#     try:
-#         scraper = UpworkScraper()
-#         await scraper.login()
-#         rss_feed = await scraper.rss_feed_scrape()
-
-#         result = await driver(rss_feed, scraper)  # Call the driver function with the RSS feed data
-
-#         return JsonResponse({'message': 'Functionality executed successfully', 'result': result.data})
-#     except Exception as e:
-#         return JsonResponse({'error': str(e)}, status=500)

@@ -36,7 +36,8 @@ class JobPostingQualifier(models.Model):
         return 'Status set to Applied'
 
     def check_available_connects(self) -> bool:
-        if self.connects_available - self.connects_required >= 0:
+        #TODO  "error": "unsupported operand type(s) for -: 'tuple' and 'tuple'"
+        if self.connects_available[0] - self.connects_required[0] >= 0:
             return True
         return False
 
@@ -84,14 +85,14 @@ class JobPostingQualifier(models.Model):
         job_post_json = {
             "fields": {
                 "time_of_application_attempt": self._get_current_datetime_as_string(),
-                "result_of_application_attempt": self.status,
-                "title": self.title,
-                "url": self.url,
-                "posted_before": self.posted_before,
-                "description": self.description,
-                "connects_required": self.connects_required,
-                "connects_available": self.connects_available,
-                "client_country": self.client_country,
+                "result_of_application_attempt": self.status[0],
+                "title": self.title[0],
+                "url": self.url[0],
+                "posted_before": self.posted_before[0],
+                "description": self.description[0],
+                "connects_required": self.connects_required[0],
+                "connects_available": self.connects_available[0],
+                "client_country": self.client_country[0],
                 "gpt_qualifying_answer": self.gpt_answer
             }
         }
