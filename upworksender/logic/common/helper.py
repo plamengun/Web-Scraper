@@ -1,5 +1,6 @@
 import json
 import re
+from .database import get_scrape_run_by_id
 from scrape_runs.models import JobPostingQualifier, JobApplication
 from logic.services.gpt import askgpt
 from logic.common.vars import ROLE_QUALIFY_PROMPT, ROLE_APPLY_PROMPT
@@ -22,8 +23,8 @@ def save_storage(storage_data):
         json.dump(storage_data, file, sort_keys=False, indent=4)
 
     
-async def match_re_pattern(pattern, string: str) -> str:
-    match_pattern = await re.search(pattern, string, re.DOTALL | re.IGNORECASE)
+def match_re_pattern(pattern, string: str) -> str:
+    match_pattern = re.search(pattern, string, re.DOTALL | re.IGNORECASE)
     if match_pattern:
         final = match_pattern.group(1).strip()
     else:
@@ -32,8 +33,8 @@ async def match_re_pattern(pattern, string: str) -> str:
 
 
 async def extract_data_from_xml(job_post):
-    xml_to_str = await job_post.description.text
-    posted_on = await match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
+    xml_to_str = job_post.description.text
+    posted_on = match_re_pattern(POSTED_ON_PATTERN, xml_to_str)
     return posted_on
 
 
@@ -44,16 +45,40 @@ async def create_job_application(job_posting_description_data: str) -> JobApplic
 
 async def create_job_posting_qualifier(job_posting_data: tuple, client_info_data: str) -> JobPostingQualifier:
     job_posting_qualifier = JobPostingQualifier()
-    job_posting_qualifier.title=job_posting_data[0], 
-    job_posting_qualifier.url=job_posting_data[1], 
-    job_posting_qualifier.description=job_posting_data[2],
-    job_posting_qualifier.posted_before=job_posting_data[3], 
-    job_posting_qualifier.connects_required=job_posting_data[4],
-    job_posting_qualifier.connects_available=job_posting_data[5],
-    job_posting_qualifier.client_country=job_posting_data[6],
-    job_posting_qualifier.application_page_url=job_posting_data[7],
+    job_posting_qualifier.title=job_posting_data[0]
+    job_posting_qualifier.url=job_posting_data[1]
+    job_posting_qualifier.description=job_posting_data[2]
+    job_posting_qualifier.posted_before=job_posting_data[3]
+    job_posting_qualifier.connects_required=job_posting_data[4]
+    job_posting_qualifier.connects_available=job_posting_data[5]
+    job_posting_qualifier.client_country=job_posting_data[6]
+    job_posting_qualifier.application_page_url=job_posting_data[7]
     job_posting_qualifier.client_properties=client_info_data
     return job_posting_qualifier
+
+
+async def create_job_posting_qualifier_when_error(job_posting_qualifier: JobPostingQualifier | None, posted_on:str, title:str, url: str, scrape_run_id: int, error: str) -> JobPostingQualifier:
+    if job_posting_qualifier is None:
+        job_posting_qualifier = JobPostingQualifier()
+    job_posting_qualifier.title=title
+    job_posting_qualifier.url=url
+    if job_posting_qualifier.description is None:
+        job_posting_qualifier.description = 'NA'
+    job_posting_qualifier.posted_before=posted_on, 
+    if job_posting_qualifier.connects_required is None:
+        job_posting_qualifier.connects_required = 999
+    if job_posting_qualifier.connects_available is None:
+        job_posting_qualifier.connects_available = 999
+    if job_posting_qualifier.client_country is None:
+        job_posting_qualifier.client_country = 'NA'
+    if job_posting_qualifier.application_page_url is None:
+        job_posting_qualifier.application_page_url = 'NA'
+    if job_posting_qualifier.client_properties is None:
+        job_posting_qualifier.client_properties = 'NA'
+    job_posting_qualifier.scrape_run=await get_scrape_run_by_id(scrape_run_id)
+    job_posting_qualifier.error=error
+    return job_posting_qualifier
+
 
 
 async def get_gpt_answers_apply(job_application: JobApplication) -> list[str]:

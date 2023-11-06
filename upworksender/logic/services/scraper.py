@@ -1,5 +1,6 @@
 from playwright.async_api import async_playwright
 from logic.common.helper import create_job_application, get_gpt_answers_apply
+from rest_framework.response import Response
 from dotenv import load_dotenv
 from typing import List
 import os
@@ -62,7 +63,9 @@ class UpworkScraper:
                 rss_feed_dropdown = self.page.locator(f"//div[@data-test='UpCDropdownSecondary RssAtomLink']//div[@class='air3-dropdown-secondary']//button")
                 await rss_feed_dropdown.click()
             if self.page.get_by_text("RSS").is_visible():
-                rss_feed_button = self.page.get_by_text("RSS")
+                #TODO MAKE SURE YOU DONT HAVE FILTERS CONTAINING THE WORD RSS
+                rss_feed_button = self.page.locator(f"text=RSS")
+                rss_feed_button = rss_feed_button.nth(0)
             new_page_info = await self._new_page(rss_feed_button)
             new_page = await new_page_info.value
             rss_feeds.append(new_page.url)
@@ -80,7 +83,8 @@ class UpworkScraper:
         return new_page_info
     
     async def check_application_page_url(self, application_page_url: str) -> bool:
-        #TODO "error": "url: expected string, got object"
+        if await self.page.locator(f"//div[@class='alert alert-danger']").is_visible():
+            return print('Job post application page no longer available')
         if self.page.url != application_page_url:
             page = await self.context.new_page()
             await page.goto(application_page_url)
@@ -89,7 +93,8 @@ class UpworkScraper:
         return True
     
     async def check_job_page_url(self, job_url: str) -> bool:
-        #TODO check if job posting page exists
+        if await self.page.locator(f"//div[@class='alert alert-danger']").is_visible():
+            return print('Job post no longer available')
         if self.page != job_url:
             page = await self.context.new_page()
             await page.goto(job_url)
@@ -162,9 +167,8 @@ class UpworkScraper:
             if by_hour:
                 #TODO Check if this option is on page. If not apply.Example of job: https://www.upwork.com/ab/proposals/job/~0151606201566a3c9f/apply/
                 #TODO elements not present on page
-                # await self.page.get_by_text('Select a duration').click()
-                # await self.page.get_by_text('1 to 3 months').click()
-                #TODO Directly send!
+                await self.page.get_by_text('Select a frequency').click()
+                await self.page.get_by_text('Never').click()
                 return 'hour'
             if by_project:
                 await self.page.get_by_text('Select a duration').click()
@@ -176,16 +180,11 @@ class UpworkScraper:
 
     async def job_posting_apply(self, description: str) -> str:
         #TODO make in try except block
-        #TODO check success page after submission
-
-        self.check_application_page_url(self.page.url)
         questions_texts_list = []
         question_fields_list = []
         cover_letter_field = await self.page.query_selector('//div[@class="cover-letter-area"]//textarea')
-        #TODO AttributeError: 'NoneType' object has no attribute 'text_content' -> if this then take description from Job object
-        # description = await self.page.query_selector(f"//div[@class='description']").text_content()
 
-        #TODO https://www.upwork.com/ab/proposals/job/~0123c252110d541ad4/apply/ This postin has questions and is qualified
+        #TODO Test https://www.upwork.com/ab/proposals/job/~0123c252110d541ad4/apply/ This postin has questions and is qualified
 
         if self.page.query_selector(f'//div[@class="fe-proposal-job-questions questions-area"]'):
             questions_elements = await self.page.query_selector_all(f'//div[@class="fe-proposal-job-questions questions-area"]//label[@class="up-label"]')
@@ -209,17 +208,18 @@ class UpworkScraper:
         await self.check_application_page_type()
         
         send_button = self.page.locator(f"//footer[@class='pb-10 mt-20']/div/button[@class='up-btn up-btn-primary m-0']")
-        # "error": "object Locator can't be used in 'await' expression"
+        
         await send_button.click()
         await self.page.wait_for_load_state("load")
-
-        #Final Popup Menu
-        popup = self.page.locator(f"//div[@class='up-modal-content up-modal-headerless up-modal-desktop-container']")
-        if popup:
+        
+        if self.page.locator(f"//div[@class='up-modal-content up-modal-headerless up-modal-desktop-container']"):
             accept_terms_button = self.page.locator(f"//div[@class='checkbox']//input[@name='checkbox']")
             await accept_terms_button.click()
             apply_button = self.page.locator(f"//div[@class='up-modal-footer']//button[@class='up-btn up-btn-primary m-0 btn-primary']")
             await apply_button.click()
-
             return 'Job Application Successful'
+        elif self.page.get_by_text('Your proposal was submitted.'):
+            return 'Job Application Successful'
+        else:
+            raise ValueError('Issue encountered during proposal sending!')
 

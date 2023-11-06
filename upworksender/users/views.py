@@ -34,7 +34,8 @@ class LoginView(APIView):
             'iat': datetime.datetime.utcnow() 
         }
 
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
+        #TODO for the encoding JWT bug check this topic https://github.com/jpadilla/pyjwt/issues/319
+        token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
 
         response = Response()
 

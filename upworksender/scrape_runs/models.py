@@ -6,7 +6,7 @@ from typing import List
 
 class ScrapeRun(models.Model):
     start_time = models.DateTimeField()
-    finish_time = models.DateTimeField()
+    finish_time = models.DateTimeField(null=True, blank=True)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='users', null=True, blank=True)
     
     def get_job_posting_qualifiers(self):
@@ -15,17 +15,18 @@ class ScrapeRun(models.Model):
 
 class JobPostingQualifier(models.Model):
     title = models.CharField(max_length=400)
-    url = models.URLField()
-    posted_before = models.TextField()
-    description = models.TextField()
-    connects_required = models.PositiveIntegerField()
-    connects_available = models.PositiveIntegerField()
+    url = models.URLField(blank=True, null=True)
+    posted_before = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    connects_required = models.PositiveIntegerField(blank=True, null=True)
+    connects_available = models.PositiveIntegerField(blank=True, null=True)
     client_country = models.CharField(max_length=100)
-    application_page_url = models.URLField()
-    client_properties = models.TextField()
+    application_page_url = models.URLField(blank=True, null=True)
+    client_properties = models.TextField(blank=True, null=True)
     gpt_response = models.TextField(blank=True, null=True)
     gpt_answer = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20, default='Not_Applied')
+    error = models.TextField(blank=True, null=True)
     scrape_run = models.ForeignKey(ScrapeRun, on_delete=models.CASCADE)
 
     def change_status(self):

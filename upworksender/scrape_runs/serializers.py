@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import JobPostingQualifier, ScrapeRun
+from asgiref.sync import sync_to_async
 
 class JobPostingQualifierSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,6 +43,7 @@ class ScrapeRunSerializer(serializers.ModelSerializer):
         model = ScrapeRun
         fields = ('id', 'start_time', 'finish_time')
 
+    @sync_to_async
     def create(self, validated_data):
         instance = self.Meta.model(**validated_data)
         instance.save()
